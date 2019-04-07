@@ -3,11 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C09E702C225A0BA800CBD6E6 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = C09E702B225A0BA800CBD6E6 /* Resources */; };
+		C03F09E6225A34D2008F40DA /* tile_7.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09DC225A34D2008F40DA /* tile_7.png */; };
+		C03F09E7225A34D2008F40DA /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = C03F09DD225A34D2008F40DA /* start.wav */; };
+		C03F09E8225A34D2008F40DA /* tile_5.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09DE225A34D2008F40DA /* tile_5.png */; };
+		C03F09E9225A34D2008F40DA /* tile_4.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09DF225A34D2008F40DA /* tile_4.png */; };
+		C03F09EA225A34D2008F40DA /* tile_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E0225A34D2008F40DA /* tile_1.png */; };
+		C03F09EB225A34D2008F40DA /* tile_2.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E1225A34D2008F40DA /* tile_2.png */; };
+		C03F09EC225A34D2008F40DA /* tile_3.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E2225A34D2008F40DA /* tile_3.png */; };
+		C03F09ED225A34D2008F40DA /* tile_8.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E3225A34D2008F40DA /* tile_8.png */; };
+		C03F09EE225A34D2008F40DA /* tile_6.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E4225A34D2008F40DA /* tile_6.png */; };
+		C03F09EF225A34D2008F40DA /* tile_b.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E5225A34D2008F40DA /* tile_b.png */; };
+		C03F09F1225A3508008F40DA /* tile_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F0225A3508008F40DA /* tile_mask.png */; };
+		C03F09F3225A35B0008F40DA /* tile_base.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F2225A35B0008F40DA /* tile_base.png */; };
 		C0EC9711224E47A900956E03 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9710224E47A900956E03 /* AppDelegate.m */; };
 		C0EC9714224E47A900956E03 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9713224E47A900956E03 /* ViewController.m */; };
 		C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0EC9715224E47A900956E03 /* Assets.xcassets */; };
@@ -39,7 +50,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C09E702B225A0BA800CBD6E6 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
+		C03F09DC225A34D2008F40DA /* tile_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_7.png; sourceTree = "<group>"; };
+		C03F09DD225A34D2008F40DA /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
+		C03F09DE225A34D2008F40DA /* tile_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_5.png; sourceTree = "<group>"; };
+		C03F09DF225A34D2008F40DA /* tile_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_4.png; sourceTree = "<group>"; };
+		C03F09E0225A34D2008F40DA /* tile_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_1.png; sourceTree = "<group>"; };
+		C03F09E1225A34D2008F40DA /* tile_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_2.png; sourceTree = "<group>"; };
+		C03F09E2225A34D2008F40DA /* tile_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_3.png; sourceTree = "<group>"; };
+		C03F09E3225A34D2008F40DA /* tile_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_8.png; sourceTree = "<group>"; };
+		C03F09E4225A34D2008F40DA /* tile_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_6.png; sourceTree = "<group>"; };
+		C03F09E5225A34D2008F40DA /* tile_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_b.png; sourceTree = "<group>"; };
+		C03F09F0225A3508008F40DA /* tile_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_mask.png; sourceTree = "<group>"; };
+		C03F09F2225A35B0008F40DA /* tile_base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_base.png; sourceTree = "<group>"; };
 		C0EC970C224E47A900956E03 /* 扫雷畅玩版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "扫雷畅玩版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC970F224E47A900956E03 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C0EC9710224E47A900956E03 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -92,7 +114,6 @@
 		C0EC9703224E47A900956E03 = {
 			isa = PBXGroup;
 			children = (
-				C09E702B225A0BA800CBD6E6 /* Resources */,
 				C0EC970E224E47A900956E03 /* 扫雷畅玩版 */,
 				C0EC9725224E47A900956E03 /* 扫雷畅玩版Tests */,
 				C0EC9730224E47A900956E03 /* 扫雷畅玩版UITests */,
@@ -114,7 +135,19 @@
 		C0EC970E224E47A900956E03 /* 扫雷畅玩版 */ = {
 			isa = PBXGroup;
 			children = (
+				C03F09DD225A34D2008F40DA /* start.wav */,
+				C03F09E0225A34D2008F40DA /* tile_1.png */,
+				C03F09E1225A34D2008F40DA /* tile_2.png */,
+				C03F09E2225A34D2008F40DA /* tile_3.png */,
+				C03F09DF225A34D2008F40DA /* tile_4.png */,
+				C03F09DE225A34D2008F40DA /* tile_5.png */,
+				C03F09E4225A34D2008F40DA /* tile_6.png */,
+				C03F09DC225A34D2008F40DA /* tile_7.png */,
+				C03F09E3225A34D2008F40DA /* tile_8.png */,
+				C03F09E5225A34D2008F40DA /* tile_b.png */,
+				C03F09F2225A35B0008F40DA /* tile_base.png */,
 				C0EC9748224E64F400956E03 /* after.png */,
+				C03F09F0225A3508008F40DA /* tile_mask.png */,
 				C0EC974C224E6A2000956E03 /* Grid.h */,
 				C0EC974D224E6A2000956E03 /* Grid.m */,
 				C0EC9749224E64F400956E03 /* befor.png */,
@@ -224,6 +257,8 @@
 				TargetAttributes = {
 					C0EC970B224E47A900956E03 = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 52XQ84HH45;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter.Mac = {
 								enabled = 1;
@@ -235,16 +270,20 @@
 					};
 					C0EC9721224E47A900956E03 = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 52XQ84HH45;
+						ProvisioningStyle = Automatic;
 						TestTargetID = C0EC970B224E47A900956E03;
 					};
 					C0EC972C224E47A900956E03 = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 52XQ84HH45;
+						ProvisioningStyle = Automatic;
 						TestTargetID = C0EC970B224E47A900956E03;
 					};
 				};
 			};
 			buildConfigurationList = C0EC9707224E47A900956E03 /* Build configuration list for PBXProject "扫雷畅玩版" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -269,10 +308,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */,
+				C03F09E7225A34D2008F40DA /* start.wav in Resources */,
 				C0EC974A224E64F400956E03 /* after.png in Resources */,
+				C03F09F1225A3508008F40DA /* tile_mask.png in Resources */,
 				C0EC974B224E64F400956E03 /* befor.png in Resources */,
+				C03F09E8225A34D2008F40DA /* tile_5.png in Resources */,
+				C03F09E6225A34D2008F40DA /* tile_7.png in Resources */,
+				C03F09ED225A34D2008F40DA /* tile_8.png in Resources */,
+				C03F09F3225A35B0008F40DA /* tile_base.png in Resources */,
+				C03F09E9225A34D2008F40DA /* tile_4.png in Resources */,
+				C03F09EF225A34D2008F40DA /* tile_b.png in Resources */,
+				C03F09EC225A34D2008F40DA /* tile_3.png in Resources */,
+				C03F09EA225A34D2008F40DA /* tile_1.png in Resources */,
+				C03F09EB225A34D2008F40DA /* tile_2.png in Resources */,
 				C0EC9719224E47A900956E03 /* Main.storyboard in Resources */,
-				C09E702C225A0BA800CBD6E6 /* Resources in Resources */,
+				C03F09EE225A34D2008F40DA /* tile_6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,10 +518,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,10 +534,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -505,11 +549,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/扫雷畅玩版.app/Contents/MacOS/扫雷畅玩版";
@@ -524,11 +564,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/扫雷畅玩版.app/Contents/MacOS/扫雷畅玩版";
@@ -542,11 +578,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版UITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "扫雷畅玩版";
@@ -560,11 +592,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版UITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "扫雷畅玩版";

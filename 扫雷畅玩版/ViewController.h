@@ -9,11 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ViewController : NSViewController
+@property (weak) IBOutlet NSTextField *SecondTime;
+@property (weak) IBOutlet NSTextField *NumberLei;
 
 @property NSMutableArray *muArr;
 @property int rowNumber;
 @property int colNumber;
 @property int leiNumber;
-
+@property int passSecond;
 @end
 

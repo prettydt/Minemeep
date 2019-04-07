@@ -9,40 +9,37 @@
 #import "Grid.h"
 @implementation ViewController
 -(void)viewDidAppear{
-    [self.view.window setFrame:NSMakeRect(100,100, self.rowNumber*31, self.colNumber*32+50) display:true animate:true];
+    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
 }
-
+-(void)updateTime{
+    self.SecondTime.integerValue = self.passSecond;
+    self.passSecond ++;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSTextField *label = [[NSTextField alloc]init];
-//    label.placeholderString = @"fafa";
-//    label.frame = NSMakeRect(20, 228, 33, 17);
-//    
-//    [self.view addSubview:label];
     
-    //self.view.window.styleMask.
-    //不能放大缩小窗口
-    //  self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height);
-    
+    //显示秒
+    NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     
     //初始的行和列
     self.rowNumber = 16;
     self.colNumber = 16;
     //初始的雷数
     self.leiNumber = 40;
-    
+
     self.muArr = [NSMutableArray new];
     for (int x= 0; x < self.rowNumber; x++) {
         NSMutableArray *arr = [NSMutableArray new];
         for (int y = 0 ; y < self.colNumber; y++) {
             //生成按钮
             NSButton *button = [[NSButton alloc]init];
-            button.frame=CGRectMake(0+31*x, 0+31*y, 32, 32);
+            button.frame=CGRectMake(0+31*x, 0+31*y, 31, 31);
             button.title = @"";
-            [button setToolTip:[NSString stringWithFormat:@"%d%d",x,y]];
+            [button setToolTip:[NSString stringWithFormat:@"%d_%d",x,y]];
             [button setTarget:self];
-            [button setImage:[NSImage imageNamed:@"befor.png"]];
-            
+            [button setImage:[NSImage imageNamed:@"tile_mask.png"]];
+
             [button setAction:@selector(buttonClick:)];
             [self.view addSubview:button];
             //把生成的按钮加到grid的属性里面
@@ -51,7 +48,7 @@
             [arr addObject:grid1];
         }
         [self.muArr addObject:arr];
-        
+
     }
     
     //生成雷，算法是，按照雷的总数，random每一个类，知道到了总数，如果重复则进行下一次
@@ -80,52 +77,60 @@
 
 - (void)rightMouseDown:(NSEvent *)event
 {
-    
-    
     for (NSArray* arr in self.muArr)
     {
         for (Grid* grid in arr){
             if(NSPointInRect(event.locationInWindow, grid.btn.frame))
             {
                 NSLog(@"grid.btn.title %@",grid.btn.title);
-                
-                if([grid.btn.title  isEqual: @"🚩"])
-                {
-                    NSLog(@"1");
-                    grid.btn.title = @"❓";
-                }else
-                    if([grid.btn.title  isEqual: @"❓"])
+                if (!grid.IsClicked) {
+                    if([grid.btn.title  isEqual: @"🚩"])
                     {
-                        NSLog(@"2");
-                        grid.btn.title = @"";
+                        NSLog(@"1");
+                        grid.btn.title = @"❓";
+
                     }else
+                        if([grid.btn.title  isEqual: @"❓"])
+                        {
+                            NSLog(@"2");
+                            grid.btn.title = @"";
+                            
+                        }else
                         if([grid.btn.title  isEqual: @""])
                         {
                             NSLog(@"3");
                             grid.btn.title = @"🚩";
+                            self.leiNumber --;
                         }
+                }
+                    NSLog(@"mouse is clicked %@",grid);
                 
-                NSLog(@"mouse is clicked %@",grid);
             }
+               
         }
     }
 }
 - (IBAction)buttonClick:(id)sender {
+    NSLog(@"clicked");
+
     NSButton *btn = (NSButton *)sender;
-    btn.enabled = false;
     
-    int row = [[btn.toolTip substringWithRange:NSMakeRange(0, 1)] intValue];
-    int col = [[btn.toolTip substringWithRange:NSMakeRange(1, 1)] intValue];
-    
+
+
+    int row = [[btn.toolTip componentsSeparatedByString:@"_"][0] integerValue];
+    int col = [[btn.toolTip componentsSeparatedByString:@"_"][1] integerValue];
+
     
     Grid *clickGrid = self.muArr[row][col];
-    if(!clickGrid.IsClicked)
+    NSLog(@"toolTip%@",clickGrid.btn.title);
+    if((!clickGrid.IsClicked) && ([clickGrid.btn.title isEqualToString: @""]))
     {
+        btn.enabled = false;
         clickGrid.IsClicked = true;
         clickGrid = self.muArr[row][col];
         if (clickGrid.IsLei) {
-            [self showAlert];
-            // btn.title = @"😭";
+           // [self showAlert];
+             btn.title = @"💥";
             return;
         }
         NSArray *arrays = @[@[@-1,@-1],@[@-1,@0],@[@-1,@+1],@[@0,@-1],@[@0,@1],@[@1,@0],@[@1,@1],@[@1,@-1]];
@@ -166,12 +171,13 @@
         }
         if(count == 0)
         {
+           
             [btn setImage:[NSImage imageNamed:@"tile_base.png"]];
         }else
         {
             NSString *title = [NSString stringWithFormat:@"%d",count];
             NSColor *color = [NSColor redColor];
-            [self setButtonTitleFor:btn toString:title withColor:color];
+           // [self setButtonTitleFor:btn toString:title withColor:color];
             [btn setImage:[NSImage imageNamed:[NSString stringWithFormat:@"tile_%d.png",count]]];
         }
         //   btn.title = [NSString stringWithFormat:@"%d",count];
@@ -191,7 +197,7 @@
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
     
-    // Update the view, if already loaded.
+
 }
 
 -(void)recursion:(int) row and:(int) col btn:(NSButton *)btn{
@@ -201,7 +207,7 @@
         clickGrid.IsClicked = true;
         clickGrid = self.muArr[row][col];
         if (clickGrid.IsLei) {
-            [self showAlert];
+           // [self showAlert];
             //   btn.title = @"😭";
             return;
         }

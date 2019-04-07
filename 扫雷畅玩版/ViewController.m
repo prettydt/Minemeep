@@ -5,6 +5,10 @@
 //  Created by dt on 2019/4/1.
 //  Copyright © 2019年 dt. All rights reserved.
 //
+
+//开始和结束没做呢
+//雷数和时间需要UI,位置
+//gameOn我不知道，还是做一个吧，有时间的话
 #import "ViewController.h"
 #import "Grid.h"
 @implementation ViewController

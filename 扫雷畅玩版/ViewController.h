@@ -10,6 +10,10 @@
 
 @interface ViewController : NSViewController
 
+@property NSMutableArray *muArr;
+@property int rowNumber;
+@property int colNumber;
+@property int leiNumber;
 
 @end
 

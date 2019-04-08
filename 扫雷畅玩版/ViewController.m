@@ -8,7 +8,7 @@
 
 //开始和结束没做呢
 //雷数和时间需要UI,位置
-//gameOn我不知道，还是做一个吧，有时间的话
+//gameCenter我不知道，还是做一个吧，有时间的话
 #import "ViewController.h"
 #import "Grid.h"
 @implementation ViewController
@@ -30,8 +30,10 @@
     self.rowNumber = 16;
     self.colNumber = 16;
     //初始的雷数
-    self.leiNumber = 40;
-
+    self.leiNumber = 10;
+    self.leiNumberOrigin = 10;
+    //剩余格子
+    self.leftGrid = self.rowNumber * self.colNumber;
     self.muArr = [NSMutableArray new];
     for (int x= 0; x < self.rowNumber; x++) {
         NSMutableArray *arr = [NSMutableArray new];
@@ -104,12 +106,23 @@
                         {
                             NSLog(@"3");
                             grid.btn.title = @"🚩";
-                            self.leiNumber --;
+                           // self.leiNumber --;
                         }
                 }
                     NSLog(@"mouse is clicked %@",grid);
+                //如果 grid.btn.title ==🚩，self.leiNumber --
+                //else self.leiNumber ++
+                if([grid.btn.title isEqualToString:@"🚩"])
+                {
+                    self.leiNumber --;
+                }
+                if([grid.btn.title isEqualToString:@"❓"])
+                {
+                    self.leiNumber ++;
+                }
                 
             }
+
                
         }
     }
@@ -129,11 +142,12 @@
     NSLog(@"toolTip%@",clickGrid.btn.title);
     if((!clickGrid.IsClicked) && ([clickGrid.btn.title isEqualToString: @""]))
     {
+
         btn.enabled = false;
         clickGrid.IsClicked = true;
         clickGrid = self.muArr[row][col];
         if (clickGrid.IsLei) {
-           // [self showAlert];
+            [self showAlert];
              btn.title = @"💥";
             return;
         }
@@ -184,10 +198,27 @@
            // [self setButtonTitleFor:btn toString:title withColor:color];
             [btn setImage:[NSImage imageNamed:[NSString stringWithFormat:@"tile_%d.png",count]]];
         }
+
         //   btn.title = [NSString stringWithFormat:@"%d",count];
     }
     
-    
+    //判断胜利,开始是进入循环累加了，最后想明白，初始化成0解决问题
+    self.leftGrid = 0;
+    for (NSArray* arr in self.muArr) {
+        for (Grid *grid in arr) {
+            if(!grid.IsClicked){
+                self.leftGrid++;
+            }
+        }
+
+    }
+    NSLog(@"----");
+    NSLog(@"%d", self.leftGrid);
+    NSLog(@"%d",self.leiNumber);
+    if(self.leftGrid == self.leiNumberOrigin)
+    {
+        [self showSuccAlert];
+    }
 }
 
 - (void)setButtonTitleFor:(NSButton*)button toString:(NSString*)title withColor:(NSColor*)color
@@ -258,21 +289,19 @@
 //弹框，其实想做一个不太正经的弹框，比如每次都出个笑话这种，先做个正规的，后续再加这个
 - (IBAction)showAlert {
     NSAlert * alert = [[NSAlert alloc]init];
-    alert.messageText = @"This is messageText";
+    alert.messageText = @"     不好意思，您输了，下次走运！";
     alert.alertStyle = NSAlertStyleInformational;
-    [alert addButtonWithTitle:@"continue"];
-    [alert addButtonWithTitle:@"cancle"];
-    [alert setInformativeText:@"NSWarningAlertStyle \r Do you want to continue with delete of selected records"];
+    [alert addButtonWithTitle:@"再玩一局"];
+    [alert setInformativeText:@"有位科学家到了南极，碰到一群企鹅。他问其中一个：“你每天都干什么呀？”那企鹅说：“吃饭睡觉打豆豆。”\r他又问另一个：“你每天都干什么呀？”那企鹅也说：“吃饭睡觉打豆豆。”\r 他问了许多许多的企鹅，都说：“吃饭睡觉打豆豆。”\r后来他碰到了一只小企鹅，很可爱的样子，就问它：“小朋友，你每天都干什么呀？”小企鹅说：“吃饭睡觉。”科学家一愣，随即问到：“你怎么不打豆豆？”\r小企鹅说：“因为我就是豆豆。”"];
     [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
-        NSLog(@"xxx");
         if (returnCode == NSModalResponseOK){
             NSLog(@"(returnCode == NSOKButton)");
         }else if (returnCode == NSModalResponseCancel){
-            NSLog(@"(returnCode == NSCancelButton)");
+            NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
-            NSLog(@"if (returnCode == NSAlertFirstButtonReturn)");
+            NSLog(@"再玩一局");
         }else if (returnCode == NSAlertSecondButtonReturn){
-            NSLog(@"else if (returnCode == NSAlertSecondButtonReturn)");
+            NSLog(@"退出");
         }else if (returnCode == NSAlertThirdButtonReturn){
             NSLog(@"else if (returnCode == NSAlertThirdButtonReturn)");
         }else{
@@ -282,6 +311,29 @@
     
 }
 
+- (IBAction)showSuccAlert {
+    NSAlert * alert = [[NSAlert alloc]init];
+    alert.messageText = @"     you win the ganme！";
+    alert.alertStyle = NSAlertStyleInformational;
+    [alert addButtonWithTitle:@"再玩一局"];
+
+    [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseOK){
+            NSLog(@"(returnCode == NSOKButton)");
+        }else if (returnCode == NSModalResponseCancel){
+            NSLog(@"(returnCode == )");
+        }else if(returnCode == NSAlertFirstButtonReturn){
+            NSLog(@"再玩一局");
+        }else if (returnCode == NSAlertSecondButtonReturn){
+            NSLog(@"退出");
+        }else if (returnCode == NSAlertThirdButtonReturn){
+            NSLog(@"else if (returnCode == NSAlertThirdButtonReturn)");
+        }else{
+            NSLog(@"All Other return code %ld",(long)returnCode);
+        }
+    }];
+    
+}
 @end
 
 //实验button的字体是否能变成红色，失败了，暂时搁浅

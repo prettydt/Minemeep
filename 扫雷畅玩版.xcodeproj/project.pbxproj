@@ -519,7 +519,7 @@
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -535,7 +535,7 @@
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

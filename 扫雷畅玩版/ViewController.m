@@ -16,6 +16,8 @@
     [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
 }
 -(void)updateTime{
+
+    
     self.SecondTime.integerValue = self.passSecond;
     self.passSecond ++;
 }
@@ -25,17 +27,28 @@
     //初始化时间和地雷数
     self.SecondTime = [NSTextField new];
     self.NumberLei = [NSTextField new];
+    self.SecondTime.editable = NO;
+  //  self.SecondTime.drawsBackground = NO;
+    self.NumberLei.editable = NO;
+    //开始游戏
+    [self startGame:9 colNumber:9 leiNumber:10];
     
+}
+-(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
+{
+
+    self.SecondTime.integerValue = 0;
+    self.passSecond = 0;
     //显示秒
     self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     
     //初始的行和列
-    self.rowNumber = 9;
-    self.colNumber = 9;
+    self.rowNumber = rowNumber;
+    self.colNumber = colNumber;
     //初始的雷数
-    self.leiNumber = 10;
-    self.leiNumberOrigin = 10;
+    self.leiNumber = leiNumber;
+    self.leiNumberOrigin = leiNumber;
     //剩余格子
     self.leftGrid = self.rowNumber * self.colNumber;
     self.muArr = [NSMutableArray new];
@@ -49,7 +62,7 @@
             [button setToolTip:[NSString stringWithFormat:@"%d_%d",x,y]];
             [button setTarget:self];
             [button setImage:[NSImage imageNamed:@"tile_mask.png"]];
-
+            
             [button setAction:@selector(buttonClick:)];
             [self.view addSubview:button];
             //把生成的按钮加到grid的属性里面
@@ -58,7 +71,7 @@
             [arr addObject:grid1];
         }
         [self.muArr addObject:arr];
-
+        
     }
     
     //生成雷，算法是，按照雷的总数，random每一个类，知道到了总数，如果重复则进行下一次
@@ -77,12 +90,19 @@
         }
     }
     //设置时间和地雷数的位置
-    self.SecondTime.frame = NSMakeRect(20, 280, 60, 20);    // Do any additional setup after loading the view.
+    self.SecondTime.frame = NSMakeRect(20, self.colNumber*32, 60, 20);    // Do any additional setup after loading the view.
+    self.SecondTime.bezeled = NO;
+    self.SecondTime.backgroundColor = [NSColor grayColor];
+    self.SecondTime.textColor = [NSColor redColor];
     [self.view addSubview:self.SecondTime];
+    self.NumberLei.frame = NSMakeRect(120, self.colNumber*32, 60, 20);
+    self.NumberLei.bezeled = NO;
+    self.NumberLei.backgroundColor = [NSColor grayColor];
+    [self.view addSubview:self.NumberLei];
 }
-
 - (void)rightMouseDown:(NSEvent *)event
 {
+
     [self succSituation];
     for (NSArray* arr in self.muArr)
     {
@@ -127,6 +147,8 @@
                
         }
     }
+    self.NumberLei.integerValue = self.leiNumber;
+
 }
 - (IBAction)buttonClick:(id)sender {
     NSLog(@"clicked");
@@ -292,6 +314,7 @@
 }
 //弹框，其实想做一个不太正经的弹框，比如每次都出个笑话这种，先做个正规的，后续再加这个
 - (IBAction)showAlert {
+    [self.timer invalidate];
     NSAlert * alert = [[NSAlert alloc]init];
     alert.messageText = @"     不好意思，您输了，下次走运！";
     alert.alertStyle = NSAlertStyleInformational;
@@ -303,7 +326,8 @@
         }else if (returnCode == NSModalResponseCancel){
             NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
-            NSLog(@"再玩一局");
+            [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
+            [self startGame:9 colNumber:9 leiNumber:10];
         }else if (returnCode == NSAlertSecondButtonReturn){
             NSLog(@"退出");
         }else if (returnCode == NSAlertThirdButtonReturn){
@@ -329,7 +353,9 @@
         }else if (returnCode == NSModalResponseCancel){
             NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
-            NSLog(@"再玩一局");
+            
+            [self startGame:16 colNumber:16 leiNumber:10];
+            [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
         }else if (returnCode == NSAlertSecondButtonReturn){
             NSLog(@"退出");
         }else if (returnCode == NSAlertThirdButtonReturn){

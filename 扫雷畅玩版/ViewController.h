@@ -9,8 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ViewController : NSViewController
-@property (weak) IBOutlet NSTextField *SecondTime;
-@property (weak) IBOutlet NSTextField *NumberLei;
+@property (retain) IBOutlet NSTextField *SecondTime;
+@property (retain) IBOutlet NSTextField *NumberLei;
 
 @property NSMutableArray *muArr;
 @property int rowNumber;
@@ -20,5 +20,6 @@
 @property int leiNumberOrigin;
 @property int passSecond;
 @property int leftGrid;
+@property NSTimer* timer;
 @end
 

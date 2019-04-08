@@ -22,13 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //初始化时间和地雷数
+    self.SecondTime = [NSTextField new];
+    self.NumberLei = [NSTextField new];
+    
     //显示秒
-    NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     
     //初始的行和列
-    self.rowNumber = 16;
-    self.colNumber = 16;
+    self.rowNumber = 9;
+    self.colNumber = 9;
     //初始的雷数
     self.leiNumber = 10;
     self.leiNumberOrigin = 10;
@@ -72,17 +76,14 @@
             k++;
         }
     }
-    for (NSMutableArray *arr1 in self.muArr) {
-        for(Grid * arr2 in arr1){
-            NSLog(@"hhu%hhu",arr2.IsLei);
-        }
-    }
-    
-    // Do any additional setup after loading the view.
+    //设置时间和地雷数的位置
+    self.SecondTime.frame = NSMakeRect(20, 280, 60, 20);    // Do any additional setup after loading the view.
+    [self.view addSubview:self.SecondTime];
 }
 
 - (void)rightMouseDown:(NSEvent *)event
 {
+    [self succSituation];
     for (NSArray* arr in self.muArr)
     {
         for (Grid* grid in arr){
@@ -202,7 +203,11 @@
         //   btn.title = [NSString stringWithFormat:@"%d",count];
     }
     
-    //判断胜利,开始是进入循环累加了，最后想明白，初始化成0解决问题
+ //判断胜利,开始是进入循环累加了，最后想明白，初始化成0解决问题
+    [self succSituation];
+}
+-(void)succSituation
+{
     self.leftGrid = 0;
     for (NSArray* arr in self.muArr) {
         for (Grid *grid in arr) {
@@ -210,7 +215,7 @@
                 self.leftGrid++;
             }
         }
-
+        
     }
     NSLog(@"----");
     NSLog(@"%d", self.leftGrid);
@@ -220,7 +225,6 @@
         [self showSuccAlert];
     }
 }
-
 - (void)setButtonTitleFor:(NSButton*)button toString:(NSString*)title withColor:(NSColor*)color
 {
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
@@ -312,8 +316,10 @@
 }
 
 - (IBAction)showSuccAlert {
+    [self.timer invalidate];
     NSAlert * alert = [[NSAlert alloc]init];
-    alert.messageText = @"     you win the ganme！";
+    NSString *message = [NSString stringWithFormat:@"     你真棒，你的成绩是:%d秒",self.passSecond -1];
+    alert.messageText = message;
     alert.alertStyle = NSAlertStyleInformational;
     [alert addButtonWithTitle:@"再玩一局"];
 

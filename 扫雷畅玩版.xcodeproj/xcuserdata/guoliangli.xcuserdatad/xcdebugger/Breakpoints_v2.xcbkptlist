@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x626b;&#x96f7;&#x7545;&#x73a9;&#x7248;/ViewController.m"
-            timestampString = "576339979.011549"
+            timestampString = "576420238.9607199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-buttonClick:"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-rightMouseDown:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

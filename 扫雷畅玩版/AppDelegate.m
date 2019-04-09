@@ -18,7 +18,12 @@
     // Insert code here to initialize your application
 }
 
-
+- (IBAction)rankChoose:(id)sender {
+    NSButton *btn = (NSButton*)sender;
+    NSLog(btn.title);
+    
+}
+    
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }

@@ -23,7 +23,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSMenu *mainMenu = [NSApp mainMenu];
+    NSLog(@"%@ - %@",mainMenu,[mainMenu itemArray]);
+    NSMenuItem *oneItem = [[NSMenuItem alloc] init];
+    [oneItem setTitle:@"Load_TEXT"];
+    [mainMenu addItem:oneItem];
     //初始化时间和地雷数
     self.SecondTime = [NSTextField new];
     self.NumberLei = [NSTextField new];
@@ -36,7 +40,7 @@
 }
 -(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
 {
-
+    [self UIshow];
     self.SecondTime.integerValue = 0;
     self.passSecond = 0;
     //显示秒
@@ -89,16 +93,17 @@
             k++;
         }
     }
+
     //设置时间和地雷数的位置
-    self.SecondTime.frame = NSMakeRect(20, self.colNumber*32, 60, 20);    // Do any additional setup after loading the view.
-    self.SecondTime.bezeled = NO;
-    self.SecondTime.backgroundColor = [NSColor grayColor];
-    self.SecondTime.textColor = [NSColor redColor];
-    [self.view addSubview:self.SecondTime];
-    self.NumberLei.frame = NSMakeRect(120, self.colNumber*32, 60, 20);
-    self.NumberLei.bezeled = NO;
-    self.NumberLei.backgroundColor = [NSColor grayColor];
-    [self.view addSubview:self.NumberLei];
+//    self.SecondTime.frame = NSMakeRect(20, self.colNumber*32, 60, 20);    // Do any additional setup after loading the view.
+//    self.SecondTime.bezeled = NO;
+//    self.SecondTime.backgroundColor = [NSColor grayColor];
+//    self.SecondTime.textColor = [NSColor redColor];
+//    [self.view addSubview:self.SecondTime];
+//    self.NumberLei.frame = NSMakeRect(120, self.colNumber*32, 60, 20);
+//    self.NumberLei.bezeled = NO;
+//    self.NumberLei.backgroundColor = [NSColor grayColor];
+//    [self.view addSubview:self.NumberLei];
 }
 - (void)rightMouseDown:(NSEvent *)event
 {
@@ -148,7 +153,7 @@
         }
     }
     self.NumberLei.integerValue = self.leiNumber;
-
+    [self UIshow];
 }
 - (IBAction)buttonClick:(id)sender {
     NSLog(@"clicked");
@@ -354,8 +359,8 @@
             NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
             
-            [self startGame:16 colNumber:16 leiNumber:10];
-            [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
+            [self startGame:9 colNumber:9 leiNumber:10];
+
         }else if (returnCode == NSAlertSecondButtonReturn){
             NSLog(@"退出");
         }else if (returnCode == NSAlertThirdButtonReturn){
@@ -366,8 +371,37 @@
     }];
     
 }
-@end
 
+-(void)UIshow{
+    
+    
+    NSString *value = [NSString stringWithFormat:@"%d",self.leiNumber];
+    
+    NSString *valueInt = [self addString:@"0" Length:3 OnString:value];
+    
+    NSLog(@"valueInt == %@",valueInt);
+    for(int i = 0 ;i< 3; i++)
+    {
+        NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(15+13*i, 280, 13, 23)];
+        NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valueInt substringWithRange:NSMakeRange(i, 1)] ];
+        NSImage *myImage2 = [NSImage imageNamed:named];
+        [imView2 setImage:myImage2];
+        [self.view addSubview:imView2];
+    }
+}
+    //补位的方法,这段程序写的好
+-(NSString*)addString:(NSString*)string Length:(NSInteger)length OnString:(NSString*)str{
+    
+    NSMutableString * nullStr = [[NSMutableString alloc] initWithString:@""];
+    if ((length-str.length)> 0) {
+        for (int i = 0; i< (length-str.length); i++) {
+            [nullStr appendString:string];
+        }
+    }
+    return [NSString stringWithFormat:@"%@%@",nullStr,str];
+}
+
+@end
 //实验button的字体是否能变成红色，失败了，暂时搁浅
 
 //NSColor *color = [NSColor blueColor];

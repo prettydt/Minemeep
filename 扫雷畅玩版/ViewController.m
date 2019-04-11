@@ -13,16 +13,53 @@
 #import "Grid.h"
 @implementation ViewController
 -(void)viewDidAppear{
+
     [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
 }
--(void)updateTime{
+-(void)updateTime:(BOOL)first{
 
-    
+    if(first == true)
+	{
+		self.passSecond =0;
+		NSLog(@"this is 0");
+	}
     self.SecondTime.integerValue = self.passSecond;
     self.passSecond ++;
+	[self numberToLabel:self.passSecond secOrLei:@"sec"];
+
+}
+-(void)numberToLabel:(int)number secOrLei:(NSString *)secOrLei
+{
+	int initX = 0;
+	if([secOrLei isEqualToString:@"lei"])
+	{
+		initX = 20;
+	}else
+	{
+		initX = 200;
+	}
+	NSString *passSecond = [NSString stringWithFormat:@"%d",number];
+	
+	NSString *valuePassSecond = [self addString:@"0" Length:3 OnString:passSecond];
+	
+	NSLog(@"passSecond == %@",valuePassSecond);
+	for(int i = 0 ;i< 3; i++)
+	{
+		NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(initX+13*i, 280, 13, 23)];
+		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valuePassSecond substringWithRange:NSMakeRange(i, 1)] ];
+		NSImage *myImage2 = [NSImage imageNamed:named];
+		[imView2 setImage:myImage2];
+		[self.view addSubview:imView2];
+	}
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+	[self numberToLabel:00 secOrLei:@"sec"];
+	
+	//显示秒
+	self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+	[[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+
     NSMenu *mainMenu = [NSApp mainMenu];
     NSLog(@"%@ - %@",mainMenu,[mainMenu itemArray]);
     NSMenuItem *oneItem = [[NSMenuItem alloc] init];
@@ -40,19 +77,18 @@
 }
 -(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
 {
-    [self UIshow];
+
+	//[self initPassSecond];
     self.SecondTime.integerValue = 0;
     self.passSecond = 0;
-    //显示秒
-    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    
+
     //初始的行和列
     self.rowNumber = rowNumber;
     self.colNumber = colNumber;
     //初始的雷数
     self.leiNumber = leiNumber;
     self.leiNumberOrigin = leiNumber;
+	[self numberToLabel:self.leiNumber secOrLei:@"lei"];
     //剩余格子
     self.leftGrid = self.rowNumber * self.colNumber;
     self.muArr = [NSMutableArray new];
@@ -153,7 +189,7 @@
         }
     }
     self.NumberLei.integerValue = self.leiNumber;
-    [self UIshow];
+	[self numberToLabel:self.leiNumber secOrLei:@"lei"];
 }
 - (IBAction)buttonClick:(id)sender {
     NSLog(@"clicked");
@@ -371,24 +407,23 @@
     }];
     
 }
-
--(void)UIshow{
-    
-    
-    NSString *value = [NSString stringWithFormat:@"%d",self.leiNumber];
-    
-    NSString *valueInt = [self addString:@"0" Length:3 OnString:value];
-    
-    NSLog(@"valueInt == %@",valueInt);
-    for(int i = 0 ;i< 3; i++)
-    {
-        NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(15+13*i, 280, 13, 23)];
-        NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valueInt substringWithRange:NSMakeRange(i, 1)] ];
-        NSImage *myImage2 = [NSImage imageNamed:named];
-        [imView2 setImage:myImage2];
-        [self.view addSubview:imView2];
-    }
+-(void)initPassSecond{
+	//雷数字
+	NSString *value = [NSString stringWithFormat:@"%d",000];
+	
+	NSString *valueInt = [self addString:@"0" Length:3 OnString:value];
+	
+	NSLog(@"leiNumber == %@",valueInt);
+	for(int i = 0 ;i< 3; i++)
+	{
+		NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(100+13*i, 280, 13, 23)];
+		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valueInt substringWithRange:NSMakeRange(i, 1)] ];
+		NSImage *myImage2 = [NSImage imageNamed:named];
+		[imView2 setImage:myImage2];
+		[self.view addSubview:imView2];
+	}
 }
+
     //补位的方法,这段程序写的好
 -(NSString*)addString:(NSString*)string Length:(NSInteger)length OnString:(NSString*)str{
     

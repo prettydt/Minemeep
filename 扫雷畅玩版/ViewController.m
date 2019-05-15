@@ -14,7 +14,7 @@
 @implementation ViewController
 -(void)viewDidAppear{
 
-    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
+    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*5) display:true animate:true];
 }
 -(void)updateTime:(BOOL)first{
 
@@ -33,10 +33,10 @@
 	int initX = 0;
 	if([secOrLei isEqualToString:@"lei"])
 	{
-		initX = 20;
+		initX = 100;
 	}else
 	{
-		initX = 200;
+		initX = 800;
 	}
 	NSString *passSecond = [NSString stringWithFormat:@"%d",number];
 	
@@ -45,7 +45,7 @@
 	NSLog(@"passSecond == %@",valuePassSecond);
 	for(int i = 0 ;i< 3; i++)
 	{
-		NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(initX+13*i, 280, 13, 23)];
+		NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(initX+13*i, 510, 13, 23)];
 		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valuePassSecond substringWithRange:NSMakeRange(i, 1)] ];
 		NSImage *myImage2 = [NSImage imageNamed:named];
 		[imView2 setImage:myImage2];
@@ -56,9 +56,6 @@
     [super viewDidLoad];
 	[self numberToLabel:00 secOrLei:@"sec"];
 	
-	//显示秒
-	self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-	[[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 
     NSMenu *mainMenu = [NSApp mainMenu];
     NSLog(@"%@ - %@",mainMenu,[mainMenu itemArray]);
@@ -72,11 +69,15 @@
   //  self.SecondTime.drawsBackground = NO;
     self.NumberLei.editable = NO;
     //开始游戏
-    [self startGame:9 colNumber:9 leiNumber:10];
+    [self startGame:30 colNumber:16 leiNumber:99];
     
 }
 -(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
 {
+    [self numberToLabel:00 secOrLei:@"sec"];
+    //显示秒
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 
 	//[self initPassSecond];
     self.SecondTime.integerValue = 0;
@@ -367,8 +368,7 @@
         }else if (returnCode == NSModalResponseCancel){
             NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
-            [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*6) display:true animate:true];
-            [self startGame:9 colNumber:9 leiNumber:10];
+            [self startGame:30 colNumber:16 leiNumber:99];
         }else if (returnCode == NSAlertSecondButtonReturn){
             NSLog(@"退出");
         }else if (returnCode == NSAlertThirdButtonReturn){
@@ -394,8 +394,8 @@
         }else if (returnCode == NSModalResponseCancel){
             NSLog(@"(returnCode == )");
         }else if(returnCode == NSAlertFirstButtonReturn){
-            
-            [self startGame:9 colNumber:9 leiNumber:10];
+        
+           [self startGame:30 colNumber:16 leiNumber:99];
 
         }else if (returnCode == NSAlertSecondButtonReturn){
             NSLog(@"退出");

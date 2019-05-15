@@ -14,6 +14,14 @@
 
 @implementation AppDelegate
 
+- (IBAction)helpButton:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.jianshu.com/p/e9e1e712272b"]];
+    
+}
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return true;
+}
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
 }

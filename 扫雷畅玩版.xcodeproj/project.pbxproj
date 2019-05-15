@@ -36,7 +36,6 @@
 		C0EC971C224E47A900956E03 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC971B224E47A900956E03 /* main.m */; };
 		C0EC9727224E47A900956E03 /* _____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9726224E47A900956E03 /* _____Tests.m */; };
 		C0EC9732224E47A900956E03 /* _____UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9731224E47A900956E03 /* _____UITests.m */; };
-		C0EC9743224E5B5200956E03 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EC9742224E5B5200956E03 /* GameKit.framework */; };
 		C0EC974A224E64F400956E03 /* after.png in Resources */ = {isa = PBXBuildFile; fileRef = C0EC9748224E64F400956E03 /* after.png */; };
 		C0EC974B224E64F400956E03 /* befor.png in Resources */ = {isa = PBXBuildFile; fileRef = C0EC9749224E64F400956E03 /* befor.png */; };
 		C0EC974E224E6A2000956E03 /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC974D224E6A2000956E03 /* Grid.m */; };
@@ -82,6 +81,7 @@
 		C03F09E5225A34D2008F40DA /* tile_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_b.png; sourceTree = "<group>"; };
 		C03F09F0225A3508008F40DA /* tile_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_mask.png; sourceTree = "<group>"; };
 		C03F09F2225A35B0008F40DA /* tile_base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_base.png; sourceTree = "<group>"; };
+		C05372F022617B630009BCE4 /* 扫雷畅玩版.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "扫雷畅玩版.entitlements"; sourceTree = "<group>"; };
 		C0EC970C224E47A900956E03 /* 扫雷畅玩版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "扫雷畅玩版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC970F224E47A900956E03 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C0EC9710224E47A900956E03 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 		C0EC972D224E47A900956E03 /* 扫雷畅玩版UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "扫雷畅玩版UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC9731224E47A900956E03 /* _____UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "_____UITests.m"; sourceTree = "<group>"; };
 		C0EC9733224E47A900956E03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0EC9742224E5B5200956E03 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C0EC9748224E64F400956E03 /* after.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = after.png; sourceTree = "<group>"; };
 		C0EC9749224E64F400956E03 /* befor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = befor.png; sourceTree = "<group>"; };
 		C0EC974C224E6A2000956E03 /* Grid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
@@ -110,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0EC9743224E5B5200956E03 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +153,7 @@
 		C0EC970E224E47A900956E03 /* 扫雷畅玩版 */ = {
 			isa = PBXGroup;
 			children = (
+				C05372F022617B630009BCE4 /* 扫雷畅玩版.entitlements */,
 				C03F09DD225A34D2008F40DA /* start.wav */,
 				C03F09E0225A34D2008F40DA /* tile_1.png */,
 				C03F09E1225A34D2008F40DA /* tile_2.png */,
@@ -215,7 +214,6 @@
 		C0EC9741224E5B5200956E03 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C0EC9742224E5B5200956E03 /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -291,7 +289,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter.Mac = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -553,14 +551,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "扫雷畅玩版/_____.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "扫雷畅玩版/扫雷畅玩版.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
+				PRODUCT_BUNDLE_IDENTIFIER = mineMeep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -569,14 +567,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "扫雷畅玩版/_____.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "扫雷畅玩版/扫雷畅玩版.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 52XQ84HH45;
 				INFOPLIST_FILE = "扫雷畅玩版/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "prettydt.-----";
+				PRODUCT_BUNDLE_IDENTIFIER = mineMeep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

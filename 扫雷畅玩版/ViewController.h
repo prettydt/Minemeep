@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-@interface ViewController : NSViewController
+#import <GameKit/GameKit.h>
+@interface ViewController : NSViewController<GKGameCenterControllerDelegate>
 @property (retain) IBOutlet NSTextField *SecondTime;
 @property (retain) IBOutlet NSTextField *NumberLei;
 
@@ -21,5 +21,6 @@
 @property int passSecond;
 @property int leftGrid;
 @property NSTimer* timer;
+-(void)showLadder;
 @end
 

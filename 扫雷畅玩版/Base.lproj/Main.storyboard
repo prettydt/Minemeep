@@ -56,13 +56,25 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Help" id="wpr-3q-Mcd">
+                            <menuItem title="游戏" id="nAZ-b9-17f">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
+                                <menu key="submenu" title="游戏" systemMenu="apple" id="Rmf-oC-cfR">
                                     <items>
-                                        <menuItem title="扫雷畅玩版 Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="排行榜" keyEquivalent="," id="G3R-bD-f6s">
                                             <connections>
-                                                <action selector="helpButton:" target="Voe-Tx-rLC" id="cmn-dN-KOi"/>
+                                                <action selector="showLadder:" target="Voe-Tx-rLC" id="NUv-GH-ZCW"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Help" id="Z4J-mL-ZiK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Help" systemMenu="help" id="P5e-oH-KJt">
+                                    <items>
+                                        <menuItem title="扫雷畅玩版 Help" keyEquivalent="?" id="kn1-1Z-aKX">
+                                            <connections>
+                                                <action selector="helpButton:" target="Voe-Tx-rLC" id="yje-Vz-xn1"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -99,7 +111,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-192" y="124"/>
+            <point key="canvasLocation" x="-362" y="116"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -34,6 +34,11 @@
     
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+//gameCenter排行榜
+- (IBAction)showLadder:(id)sender {
+    ViewController *viewController = [NSApplication sharedApplication].mainWindow.contentViewController;
+    [viewController showLadder];
 }
 
 

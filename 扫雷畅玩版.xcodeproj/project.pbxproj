@@ -29,6 +29,12 @@
 		C03F09EF225A34D2008F40DA /* tile_b.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E5225A34D2008F40DA /* tile_b.png */; };
 		C03F09F1225A3508008F40DA /* tile_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F0225A3508008F40DA /* tile_mask.png */; };
 		C03F09F3225A35B0008F40DA /* tile_base.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F2225A35B0008F40DA /* tile_base.png */; };
+		C0A5F2DF228FAC3400452144 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A5F2DE228FAC3400452144 /* GameKit.framework */; };
+		C0A5F2E322913A7B00452144 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2E222913A7A00452144 /* red.png */; };
+		C0A5F2E92291476B00452144 /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2E82291476B00452144 /* topbg.png */; };
+		C0A5F2EF2291648600452144 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2EE2291648600452144 /* white.png */; };
+		C0A5F2F122916D7C00452144 /* smiley1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2F022916D7C00452144 /* smiley1.png */; };
+		C0A5F2F322916DAE00452144 /* smile1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2F222916DAE00452144 /* smile1.png */; };
 		C0EC9711224E47A900956E03 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9710224E47A900956E03 /* AppDelegate.m */; };
 		C0EC9714224E47A900956E03 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9713224E47A900956E03 /* ViewController.m */; };
 		C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0EC9715224E47A900956E03 /* Assets.xcassets */; };
@@ -82,6 +88,12 @@
 		C03F09F0225A3508008F40DA /* tile_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_mask.png; sourceTree = "<group>"; };
 		C03F09F2225A35B0008F40DA /* tile_base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_base.png; sourceTree = "<group>"; };
 		C05372F022617B630009BCE4 /* 扫雷畅玩版.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "扫雷畅玩版.entitlements"; sourceTree = "<group>"; };
+		C0A5F2DE228FAC3400452144 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C0A5F2E222913A7A00452144 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		C0A5F2E82291476B00452144 /* topbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbg.png; sourceTree = "<group>"; };
+		C0A5F2EE2291648600452144 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
+		C0A5F2F022916D7C00452144 /* smiley1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smiley1.png; sourceTree = "<group>"; };
+		C0A5F2F222916DAE00452144 /* smile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile1.png; sourceTree = "<group>"; };
 		C0EC970C224E47A900956E03 /* 扫雷畅玩版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "扫雷畅玩版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC970F224E47A900956E03 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C0EC9710224E47A900956E03 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -109,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0A5F2DF228FAC3400452144 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +190,11 @@
 				6103B2DD225C75B700B90213 /* number_7.png */,
 				6103B2D8225C75B600B90213 /* number_8.png */,
 				6103B2D9225C75B600B90213 /* number_9.png */,
+				C0A5F2EE2291648600452144 /* white.png */,
+				C0A5F2E82291476B00452144 /* topbg.png */,
+				C0A5F2E222913A7A00452144 /* red.png */,
+				C0A5F2F222916DAE00452144 /* smile1.png */,
+				C0A5F2F022916D7C00452144 /* smiley1.png */,
 				C0EC974C224E6A2000956E03 /* Grid.h */,
 				C0EC974D224E6A2000956E03 /* Grid.m */,
 				C0EC9749224E64F400956E03 /* befor.png */,
@@ -214,6 +232,7 @@
 		C0EC9741224E5B5200956E03 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0A5F2DE228FAC3400452144 /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -289,7 +308,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter.Mac = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -339,9 +358,12 @@
 				C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */,
 				C03F09E7225A34D2008F40DA /* start.wav in Resources */,
 				C0EC974A224E64F400956E03 /* after.png in Resources */,
+				C0A5F2E92291476B00452144 /* topbg.png in Resources */,
 				C03F09F1225A3508008F40DA /* tile_mask.png in Resources */,
+				C0A5F2F322916DAE00452144 /* smile1.png in Resources */,
 				6103B2E2225C75B700B90213 /* number_8.png in Resources */,
 				C0EC974B224E64F400956E03 /* befor.png in Resources */,
+				C0A5F2EF2291648600452144 /* white.png in Resources */,
 				6103B2E3225C75B700B90213 /* number_9.png in Resources */,
 				6103B2E1225C75B700B90213 /* number_2.png in Resources */,
 				C03F09E8225A34D2008F40DA /* tile_5.png in Resources */,
@@ -353,12 +375,14 @@
 				C03F09E9225A34D2008F40DA /* tile_4.png in Resources */,
 				C03F09EF225A34D2008F40DA /* tile_b.png in Resources */,
 				C03F09EC225A34D2008F40DA /* tile_3.png in Resources */,
+				C0A5F2F122916D7C00452144 /* smiley1.png in Resources */,
 				6103B2E0225C75B700B90213 /* number_6.png in Resources */,
 				C03F09EA225A34D2008F40DA /* tile_1.png in Resources */,
 				C03F09EB225A34D2008F40DA /* tile_2.png in Resources */,
 				6103B2E5225C75B700B90213 /* number_4.png in Resources */,
 				C0EC9719224E47A900956E03 /* Main.storyboard in Resources */,
 				6103B2DF225C75B700B90213 /* number_3.png in Resources */,
+				C0A5F2E322913A7B00452144 /* red.png in Resources */,
 				C03F09EE225A34D2008F40DA /* tile_6.png in Resources */,
 				6103B2E4225C75B700B90213 /* number_1.png in Resources */,
 			);

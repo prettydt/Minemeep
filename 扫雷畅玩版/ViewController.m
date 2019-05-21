@@ -12,10 +12,77 @@
 #import "ViewController.h"
 #import "Grid.h"
 @implementation ViewController
--(void)viewDidAppear{
-
-    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*5) display:true animate:true];
+BOOL _gameCenterEnabled;
+NSString *_leaderboardIdentifier = @"543109";
+-(void)showLadder
+{
+    [self showLeaderboard];
 }
+-(void)viewDidAppear{
+    
+    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*5) display:true animate:true];
+    //gameCenter本地授权
+    [self authenticateLocalPlayer];
+    [self showTopBg];
+    // 设置图片拉伸形式
+
+    
+}
+-(void)showTopBg
+{
+    NSImageView *white = [[NSImageView alloc]initWithFrame:NSMakeRect(0,496,930 ,58)];
+    white.imageScaling = NSImageScaleAxesIndependently;
+    white.imageFrameStyle = NSImageFrameGroove;
+    //    white.imageScaling = NSImageScaling.scaleProportionallyDown;
+    //    // 设置图片对齐方式, 默认居中
+    //    white.imageAlignment = NSImageAlignment.alignTopLeft;
+    //
+    NSString *whiteString = @"white.png";
+    NSImage *whiteImage = [NSImage imageNamed:whiteString];
+    [white setImage:whiteImage];
+    [self.view addSubview:white];
+    [self numberToLabel:self.leiNumber secOrLei:@"lei"];
+    [self numberToLabel:00 secOrLei:@"sec"];
+    //生成新游戏按钮: newGame
+    NSButton *button = [[NSButton alloc]init];
+    button.frame=CGRectMake(420, 505, 31, 31);
+   // button.title = @"☺";
+    [button setTarget:self];
+    [button setImage:[NSImage imageNamed:@"smile1.png"]];
+    
+    [button setAction:@selector(viewDidLoad)];
+    
+    [self.view addSubview:button];
+    
+    
+}
+/////////////////////////////
+- (void) showLeaderboard: (NSString*) leaderboardID
+{
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil)
+    {
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+       // gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeToday;
+        NSLog(@"leaderboardID%@",leaderboardID);
+        gameCenterController.leaderboardIdentifier = leaderboardID;
+
+        [self presentViewControllerAsSheet:gameCenterController];
+     
+        
+    }
+}
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    if (gameCenterViewController != NULL)
+    {
+
+        
+        [gameCenterViewController dismissViewController:gameCenterViewController];
+    }
+}
+//////////////////////////
 -(void)updateTime:(BOOL)first{
 
     if(first == true)
@@ -43,20 +110,22 @@
 	NSString *valuePassSecond = [self addString:@"0" Length:3 OnString:passSecond];
 	
 	NSLog(@"passSecond == %@",valuePassSecond);
+
 	for(int i = 0 ;i< 3; i++)
 	{
 		NSImageView *imView2=[[NSImageView alloc] initWithFrame:NSMakeRect(initX+13*i, 510, 13, 23)];
 		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valuePassSecond substringWithRange:NSMakeRange(i, 1)] ];
-		NSImage *myImage2 = [NSImage imageNamed:named];
+        NSImage *myImage2 = [NSImage imageNamed:named];
 		[imView2 setImage:myImage2];
 		[self.view addSubview:imView2];
 	}
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"size == %@",NSStringFromSize(self.view.bounds.size));
 	[self numberToLabel:00 secOrLei:@"sec"];
-	
-
+    //[self numberToLabel:99 secOrLei:@"lei"];
+    
     NSMenu *mainMenu = [NSApp mainMenu];
     NSLog(@"%@ - %@",mainMenu,[mainMenu itemArray]);
     NSMenuItem *oneItem = [[NSMenuItem alloc] init];
@@ -70,10 +139,12 @@
     self.NumberLei.editable = NO;
     //开始游戏
     [self startGame:30 colNumber:16 leiNumber:99];
+
     
 }
 -(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
 {
+    [self.timer invalidate];
     [self numberToLabel:00 secOrLei:@"sec"];
     //显示秒
     self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
@@ -114,7 +185,7 @@
         [self.muArr addObject:arr];
         
     }
-    
+
     //生成雷，算法是，按照雷的总数，random每一个类，知道到了总数，如果重复则进行下一次
     
     int k = 0;
@@ -286,6 +357,7 @@
     NSLog(@"%d",self.leiNumber);
     if(self.leftGrid == self.leiNumberOrigin)
     {
+        [self uploadScore];
         [self showSuccAlert];
     }
 }
@@ -354,8 +426,37 @@
         //btn.title = [NSString stringWithFormat:@"%d",count];
     }
 }
+-(void)uploadScore{
+    NSLog(@"ffffff%hhd",_gameCenterEnabled);
+    if (_gameCenterEnabled) {
+        GKScore *gkscore = [[GKScore alloc]initWithLeaderboardIdentifier:_leaderboardIdentifier];
+        gkscore.shouldSetDefaultLeaderboard = YES;
+        gkscore.value = [self.SecondTime integerValue];
+        [GKScore reportScores:@[gkscore] withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                NSLog(@"%@", [error localizedDescription]);
+            }
+        }];
+    }
+
+
+    
+}
+- (void) reportScore: (int64_t) score forLeaderboardID: (NSString*) identifier
+{
+    GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: identifier];
+    scoreReporter.value = score;
+    scoreReporter.context = 0;
+    
+    NSArray *scores = @[scoreReporter];
+    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+        //Do something interesting here.
+    }];
+}
 //弹框，其实想做一个不太正经的弹框，比如每次都出个笑话这种，先做个正规的，后续再加这个
 - (IBAction)showAlert {
+    //上传分数
+
     [self.timer invalidate];
     NSAlert * alert = [[NSAlert alloc]init];
     alert.messageText = @"     不好意思，您输了，下次走运！";
@@ -435,6 +536,68 @@
     }
     return [NSString stringWithFormat:@"%@%@",nullStr,str];
 }
+
+#pragma mark leaderboard
+- (void)authenticateLocalPlayer {
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    localPlayer.authenticateHandler = ^(NSViewController *viewController, NSError *error){
+        if (viewController != nil) {
+            [self presentViewControllerAsSheet:viewController];
+        }
+        else{
+            if ([GKLocalPlayer localPlayer].authenticated) {
+                _gameCenterEnabled = YES;
+                NSLog(@"authenticated");
+              
+                // Get the default leaderboard identifier.
+                [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^(NSString *leaderboardIdentifier, NSError *error) {
+                    NSLog(@"%@", leaderboardIdentifier);
+                    if (error != nil) {
+                        NSLog(@"here");
+                        NSLog(@"%@", [error description]);
+                    }
+                    else{
+                        _leaderboardIdentifier = leaderboardIdentifier;
+                    }
+                }];
+
+            }
+            
+            else{
+                _gameCenterEnabled = NO;
+            }
+        }
+    };
+}
+
+
+- (void)reportScore:(NSNotification *) notification {
+    if (_gameCenterEnabled) {
+        NSDictionary *userInfo = notification.userInfo;
+        NSNumber *score = [userInfo objectForKey:@"highestScore"];
+        GKScore *gkscore = [[GKScore alloc]initWithLeaderboardIdentifier:_leaderboardIdentifier];
+        gkscore.shouldSetDefaultLeaderboard = YES;
+        gkscore.value = [score integerValue];
+        [GKScore reportScores:@[gkscore] withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                NSLog(@"%@", [error localizedDescription]);
+            }
+        }];
+    }
+    
+    
+}
+
+- (void)showLeaderboard{
+    GKGameCenterViewController *gcViewController = [[GKGameCenterViewController alloc] init];
+    gcViewController.gameCenterDelegate = self;
+    
+    gcViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    gcViewController.leaderboardIdentifier = _leaderboardIdentifier;
+    NSLog(@"_leaderboardIdentifier%@", _leaderboardIdentifier);
+    [self presentViewControllerAsSheet:gcViewController];
+}
+
 
 @end
 //实验button的字体是否能变成红色，失败了，暂时搁浅

@@ -1,3 +1,37 @@
+左键，点开按钮，如果是雷，结束，如果不是雷，继续点
+右键，标记棋子，❓，如果已经点开了的，则点开周围的没有点开的雷，如果里面有雷，则fail
+左右键：周围8个格子，对于没有点开的，做点击的动画
+
+button：
+   mouseDown
+        If 时间差 < 1秒
+		allButtonPressed
+        else
+		mouseDown
+   rightMouseDown
+        If 时间差 < 1秒
+		allButtonPressed  
+         else
+	       rightMouseDown
+ rightMouseUp
+         super rightMouseUp
+
+viewController
+  buttonClick
+  rightMouseDown
+        self.allButtonPressed = false
+        If self.allButtonPressed
+		for btn in btns
+		     btn.highlight = true
+		break
+        else
+		右键的功能
+  allButtonPressed
+       self.allButtonPressd = true
+
+rightMouseUp
+      For  btn in btns
+	    btn.highlight = false
 //
 //  myButton.m
 //  dataFromControllerToView

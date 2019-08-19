@@ -1,0 +1,604 @@
+import Foundation
+protocol todoPlans
+{
+    func planA()
+}
+class printSomething: NSObject {
+    var delegate:todoPlans?
+    func callProtocalMethod() {
+        delegate?.planA()
+    }
+}
+class doPlans: todoPlans {
+    func planA() {
+        print("i implement the method")
+    }
+}
+let bb = printSomething()
+bb.delegate = doPlans()
+bb.callProtocalMethod()
+class superClass{
+    var count = 0
+    func add(amount:Int) {
+        count += amount
+    }
+}
+let a1 = superClass()
+a1.add(amount: 19)
+a1.count
+class childClass1:superClass
+{
+    var childVar = 0
+    override func add(amount: Int) {
+        count = 11
+    }
+}
+let a2 = childClass1()
+a2.add(amount: 10)
+a2.count
+a2.childVar
+class LevelTracker{
+    static var highestUnlockedLevel = 1
+    var currentLevel = 1
+    static func unlock(_ level:Int){
+        if level > highestUnlockedLevel {
+            highestUnlockedLevel =  level
+        }
+    }
+    static func isUnlocked(_ level:Int) ->Bool{
+        return level <= highestUnlockedLevel
+    }
+    @discardableResult
+    func advance(to level:Int) ->Bool{
+        if LevelTracker.isUnlocked(level){
+            currentLevel = level
+            return true
+        }else
+        {
+            return false
+        }
+    }
+}
+class Player{
+    var tracker = LevelTracker()
+    let playerName:String
+    func complete(level:Int){
+        LevelTracker.unlock(level + 1)
+        tracker.advance(to: level + 1)
+    }
+    init(name:String){
+        playerName  =  name
+    }
+}
+var player = Player(name:"a")
+player.complete(level: 1)
+print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+player = Player(name: "Beto")
+LevelTracker.highestUnlockedLevel
+
+if player.tracker.advance(to: 6) {
+    print("player is now on level 6")
+} else {
+    print("level 6 has not yet been unlocked")
+}
+// Prints "level 6 has not yet been unlocked"
+class someClass{
+    class func someMethod()
+    {
+        print("this is a  class method~")
+    }
+}
+
+class childClass:someClass
+{
+    class override func someMethod()
+    {
+        print("this is a child method ")
+    }
+}
+print(someClass.someMethod())
+print(childClass.someMethod())
+class Counter{
+    var count = 0
+    func increaseMent()  {
+        count += 1
+    }
+    func reset() {
+        count = 0
+    }
+    func addBy(param:Int) {
+        count += param
+    }
+}
+let counter = Counter()
+counter.increaseMent()
+counter.count
+counter.reset()
+counter.count
+counter.addBy(param: 5)
+counter.count
+var mixArr = [Any]()
+mixArr.append(1)
+mixArr.append("String")
+mixArr.append([1,2,3])
+struct Point{
+    var x = 0.0,y = 0.0
+}
+struct Size {
+    var width = 0.0,height = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size  = Size()
+    var center : Point {
+        get {
+          let centerX = origin.x + (size.width / 2)
+          let centerY = origin.y + (size.height / 2)
+            return Point(x:centerX,y:centerY)
+        }
+        set{
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+        
+    }
+}
+var square1 = Rect(origin: Point(x: 0, y: 0), size: Size(width: 10, height: 10))
+print("\(square1.center)")
+print("\(square1)")
+square1.center  = Point(x: 15, y: 15)
+print("\(square1)")
+struct Cube{
+    var width = 0.0,height = 0.0,depth = 0.0
+    var volume:Double{
+        return width * height * depth
+    }
+}
+let cube = Cube(width: 1, height: 2, depth: 3)
+cube.volume
+let finalSquare = 25
+var board = [Int](repeating: 0, count: finalSquare + 1)
+var square = 0
+var diceRoll = 0
+while square < finalSquare {
+    // roll the dice
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+    if square < board.count {
+        // if we're still on the board, move up or down for a snake or a ladder
+        square += board[square]
+    }
+}
+print("Game over!")
+
+let f = "abc"
+let b = "bcd"
+f.hashValue
+b.hashValue
+let defaultColor = "red"
+var userColor:String?
+let theColor = userColor ?? defaultColor
+1 != 2 && 1<2
+func aa(name:String) -> Bool
+{
+    return true
+}
+aa(name:"afa")
+var from = [1,2,3,4,5,6,1]
+//from.append("afa")
+from.contains(3)
+let to = Set(from).sorted()
+let toArr = Array(to).sorted()
+var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+favoriteGenres.contains("Rock")
+func maxAndMin(inArray:[Int]) ->(max:Int,min:Int)?
+{
+    if inArray.isEmpty {return nil}
+    var max  = inArray.first!
+    var min  = inArray.first!
+    for item in inArray {
+        if item > max {
+            max = item
+        }
+        if item <= min
+        {
+            min = item
+        }
+    }
+    return (max,min)
+}
+
+maxAndMin(inArray: [1,2,3])
+func greeting(firstLabel param:String) -> String
+{
+    return "first label and return \(param)"
+}
+greeting(firstLabel: "firstlabel")
+var firstNumber:Int? = 11
+var secondNumer:Int? = 52
+let age = -3
+var theString:String? = "faafa"
+theString!
+var a:String! = "aaaa"
+a = nil
+if let b = theString
+{
+    print(b)
+}
+let tu = (1,2,3,4,5,6)
+tu.0
+tu.1
+//print(tu.map({$0 + 3}))
+//assert(age > 0,"age is less than 0")
+secondNumer  = nil
+if let f = firstNumber,let s = secondNumer, f < s
+{
+    print("true")
+}else
+{
+    print("condition false")
+}
+//var possible:String?
+//if let aa = possible
+//{
+//    print("aa has value")
+//}else
+//{
+//    print("aa has no value ,nil")
+//}
+let arr = [1,2,3,4,5,6]
+let arr3 = arr.compactMap({$0 * 3})
+arr3
+arr.index(after: 1)
+arr.index(1, offsetBy: 0)
+arr[0]
+let keyNames = ["a", "b", "c", "d", "e"]
+let valueNames = [1, 2, 4, 5]
+let nameDic = Dictionary(uniqueKeysWithValues: zip(keyNames, valueNames))
+print(nameDic)
+let nameDic3 = nameDic.filter({ $0.value < 5 })
+print(nameDic3)
+
+var myString = " "
+if myString.isEmpty  {
+    print("this is a empty String")
+}
+let swiftString2 = "one two three"
+
+let StrArr = swiftString2.split(separator: " ") //["one", "two", "three"]
+StrArr
+let greeting = "Guten Tag!"
+print(greeting[greeting.startIndex])
+print(greeting[greeting.index(after: greeting.startIndex)])
+print(greeting[greeting.index(before: greeting.endIndex)])
+let index = greeting.index(greeting.startIndex, offsetBy: 2)
+print(greeting[index])
+let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
+
+var array = [1,2]
+
+//array.seprate
+class item
+{
+    var f1 = 1
+    var f2 = 2
+}
+func dim<T>(_ count: Int, _ value: T) -> [T] {
+    return [T](repeating: value, count: count)
+}
+
+var cookies1 = dim(9, dim(7, item()))
+
+for x in 1...4
+{
+    print(cookies1[x][0].f1)
+}
+var cookies = Array2D(columns: 9, rows: 7, initialValue: 0)
+cookies[3,1]
+
+var arra = [item]()
+let enteredDoorCode = true
+let passedRetinaScan = false
+if enteredDoorCode && passedRetinaScan {
+    print("Welcome!")
+} else {
+    print("ACCESS DENIED")
+}
+
+let names = ["Anna", "Alex", "Brian", "Jack"]
+for item in names[2...]
+{
+    print(item)
+}
+var world = "Hello world"
+var str = "Hello world"
+let str1 = str
+if(world == str1)
+{
+    print(str)
+    print(3>2 ? "greater":"litter")
+}
+enum type:Int
+{
+ case a
+ case   b
+ case   c
+ case   d
+}
+let defaultColorName = "red"
+var userDefinedColorName: String?   // defaults to nil
+
+var colorNameToUse = userDefinedColorName ?? defaultColorName
+// userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
+
+struct Matrix {
+    let rows: Int, columns: Int
+    var grid: [Double]
+    init(rows: Int, columns: Int) {
+        self.rows = rows
+        self.columns = columns
+        grid = Array(repeating: 0.0, count: rows * columns)
+    }
+    func indexIsValid(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < rows && column >= 0 && column < columns
+    }
+    subscript(row: Int, column: Int) -> Double {
+        get {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            return grid[(row * columns) + column]
+        }
+        set {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            grid[(row * columns) + column] = newValue
+        }
+    }
+}
+
+var matrix = Matrix(rows: 2, columns: 2)
+
+class Survey
+{
+    var name = 1
+    init(name:Int) {
+        self.name = name
+    }
+    
+}
+var test:String? = "1312"
+test!
+let aa = Survey(name:1312)
+var constantName:String?
+if let aa = constantName
+{
+    print("has value\(aa)")
+}else
+{
+    print("no Value")
+}
+print(aa.name)
+//let someValue = matrix[2, 2]
+//struct Point{
+//    var x = 0.0,y = 0.0
+//    mutating func moveBy(x deltaX:Double,y deltaY:Double)
+//    {
+//        x += deltaX
+//        y += deltaY
+//    }
+//
+//}
+//var somePont = Point(x: 1.0, y: 1.0)
+//somePont.moveBy(x: 2.0, y: 3.0)
+//print("The point is now at (\(somePont.x),\(somePont.y))")
+//验证swift中的self,代表的是class里面的property,区别于function里面的param，学习了
+//struct Point {
+//    var x = 0.0,y = 0.0
+//    func isToTheRightOf(x:Double) -> Bool {
+//        print(self.x)
+//        print(x)
+//        print(self.y)
+//       // self.isToTheRightOf(x: 2)
+//        return self.x > y
+//    }
+//}
+//let somePoint = Point(x: 7.0, y: 5.0)
+//if somePoint.isToTheRightOf(x: 1.0)
+//{
+//    print("This point is to the right of the line where x == 1.0")
+//}
+//let minuteInterval = 5
+//let minutes = 60
+//for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+//    print(tickMark)
+////}
+//struct Point {
+//    var x = 0.0, y = 0.0
+//}
+//struct Size {
+//    var width = 0.0, height = 0.0
+//}
+//struct Rect {
+//    var origin = Point()
+//    var size = Size()
+//    var center: Point {
+//        get {
+//            let centerX = origin.x + (size.width / 2)
+//            let centerY = origin.y + (size.height / 2)
+//            return Point(x: centerX, y: centerY)
+//        }
+//        set(newCenter) {
+//            origin.x = newCenter.x - (size.width / 2)
+//            origin.y = newCenter.y - (size.height / 2)
+//        }
+//    }
+//}
+//var square = Rect(origin: Point(x: 0.0, y: 0.0),
+//                  size: Size(width: 10.0, height: 10.0))
+//let initialSquareCenter = square.center
+//square.center = Point(x: 15.0, y: 15.0)
+//
+//
+//struct Resolution {
+//    var width = 0
+//    var height = 1
+//}
+//class VideoMode {
+//    var resolution = Resolution()
+//    var interlaced = false
+//    var frameRate = 0.0
+//    var name: String?
+//}
+//
+//let video = VideoMode()
+//print(video.resolution.height)
+//
+//enum CompassPoint {
+//    case north
+//    case south
+//    case east
+//    case west
+//}
+//
+//var directionToHead = CompassPoint.south
+//directionToHead = .east
+//switch directionToHead {
+//case .north:
+//    print("Lots of planets have a north")
+//case .south:
+//    print("Watch out for penguins")
+//case .east:
+//    print("Where the sun rises")
+//case .west:
+//    print("Where the skies are blue")
+//}
+//
+//let arr = Array2D(columns: 5, rows: 5, initialValue: 1)
+//
+//let rect = (2,0)
+//var count = 0
+//
+//for x in 2..<5
+//{
+//   // print(arr[0,1])
+//    if (arr[0,x] == 1) {
+//        count += 1
+//
+//    }
+//
+//}
+//print(count)
+//for x in 0..<2
+//{
+//    if (arr[0,x] == 1) {
+//        count += 1
+//
+//    }
+//
+//}
+//print(count)
+//func greet(person: String) -> String {
+//    let greeting = "Hello, " + person + "!"
+//    return greeting
+//}
+//
+//func greet(people:String) ->String
+//{
+//    let greeting = "Hello, " + people + "~"
+//    return greeting
+//}
+//
+//var letMe = greet(people: "this is my function~")
+//
+//print("String is \(letMe)")
+//
+//func addX(x:Int) ->Int
+//{
+//    var y = 1
+//    y = y + x
+//    return y
+//  //  return 5
+//}
+//func findTheIndex(findData:[Int],allData:[Int]) ->(Int,Int)
+//{
+//    return(1,2)
+//}
+//func returnNoValue(in:Int)
+//{
+//    print("this is a noValueReturn~")
+//}
+//returnNoValue(in: 1)
+//print(findTheIndex(findData: [1], allData: [2]))
+//print("x is \(addX(x: 5))")
+//func winOrLose(pressPoint:(x:Int,y:Int),board:[Any]) -> Bool {
+//    print(x)
+//    print(y)
+//    return true
+//}
+//
+//public class Grids {
+//    var position = (0,0)
+//    var ballType = 0
+//    var p = NSPoint()
+//    func a() -> {
+//
+//    }
+//}
+//func winOrLose(pressPoint:[Int,Int],board:[Grids]) -> Bool {
+//    let fourLineRange = [[[-1,0],[1,0]],[[0,-1],[0,1]],[[-1,-1],[-1,1]],[[1,1],[1,-1]]]
+//    for items in fourLineRange {
+//        for item in items {
+//            let addX = item.first
+//            let addY = item.last
+//            for x in 1...4
+//            {
+//                if board[pressPoint.index]
+//            }
+//            print(addX)
+//            print(addY)
+//            print(item)
+//        }
+//       }
+//    return true
+//}
+////winOrLose(pressPoint: (1,1), board: [1,2,0])
+//let grid = Grids()
+//
+//// initialization
+//var matrix = Array2D(columns: 9, rows: 9, initialValue:
+//grid)
+//
+//var testArr = Array2D(columns: 9, rows: 9, initialValue: 0)
+//
+//let randomPosition = (Int.random(in: 0..<9),Int.random(in: 0..<9))
+//
+//print(randomPosition)
+//
+//let arr = [Int]()
+//
+//// makes an array of rows * columns elements all filled with zero
+//print(matrix)
+//
+//
+//// now the numbers are set in the array
+////
+////for item in matrix
+////{
+////   item = Int.random(in: 1...9)
+////}
+//// print out the 2D array with a reference around the grid
+//for i in 0..<matrix.rows {
+//    print("[", terminator: "")
+//    for j in 0..<matrix.columns {
+//        matrix[j,i].ballType = Int.random(in: 0...2)
+//        if j == matrix.columns - 1 {
+//            print("\(matrix[j,i].ballType)", terminator: "")
+//        } else {
+//            print("\(matrix[j,i].ballType) ", terminator: "")
+//        }
+//    }
+//    print("]")
+//}
+//
+////let a = winOrLose(pressPoint: (1,2), board: matrix)
+//

@@ -1,0 +1,168 @@
+左键，点开按钮，如果是雷，结束，如果不是雷，继续点
+右键，标记棋子，❓，如果已经点开了的，则点开周围的没有点开的雷，如果里面有雷，则fail
+左右键：周围8个格子，对于没有点开的，做点击的动画
+
+button：
+   mouseDown
+        If 时间差 < 1秒
+		allButtonPressed
+        else
+		mouseDown
+   rightMouseDown
+        If 时间差 < 1秒
+		allButtonPressed  
+         else
+	       rightMouseDown
+ rightMouseUp
+         super rightMouseUp
+
+viewController
+  buttonClick
+  rightMouseDown
+        self.allButtonPressed = false
+        If self.allButtonPressed
+		for btn in btns
+		     btn.highlight = true
+		break
+        else
+		右键的功能
+  allButtonPressed
+       self.allButtonPressd = true
+
+rightMouseUp
+      For  btn in btns
+	    btn.highlight = false
+//
+//  myButton.m
+//  dataFromControllerToView
+//
+//  Created by Guoliang Li on 2019/8/13.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "myButton.h"
+
+@implementation myButton
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
+    
+    // Drawing code here.
+}
+-(void)mouseDown:(NSEvent *)event
+{
+    
+  //  NSLog(self.str);
+}
+-(void)rightMouseDown:(NSEvent *)event
+{
+    
+    //如果是左右键同时按了，走左右键同时按的逻辑
+    //其他情况按照之前的逻辑走
+    NSLog(@"child rightMouseDown");
+    if (self.allPressFlag) {
+        for (NSButton *btn in self.arr) {
+            btn.highlighted = true;
+        }
+    }else
+    {
+        [super rightMouseDown:event];
+    }
+
+    
+
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    NSLog(@"child rightMouseUp");
+    for (NSButton *btn in self.arr) {
+        btn.highlighted = false;
+    }
+    [super rightMouseUp:event];
+}
+@end
+//
+//  myButton.h
+//  dataFromControllerToView
+//
+//  Created by Guoliang Li on 2019/8/13.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface myButton : NSButton
+@property NSMutableArray *arr;
+@property BOOL allPressFlag;
+@end
+
+NS_ASSUME_NONNULL_END
+//
+//  ViewController.m
+//  dataFromControllerToView
+//
+//  Created by Guoliang Li on 2019/8/13.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+
+    // Do any additional setup after loading the view.
+    
+    NSMutableArray* arr = [NSMutableArray new];
+
+    myButton *titleButton = [[myButton alloc]initWithFrame:NSMakeRect(89, 117, 81, 32)];
+    [self.view addSubview:titleButton];
+    
+    myButton *titleButton1 = [[myButton alloc]initWithFrame:NSMakeRect(200, 117, 81, 32)];
+    [self.view addSubview:titleButton1];
+    
+    [arr addObject:titleButton];
+    [arr addObject:titleButton1];
+    
+    self.btn.arr = arr;
+    titleButton.arr = arr;
+    titleButton1.arr = arr;
+    
+}
+
+-(void)rightMouseDown:(NSEvent *)event
+{
+    NSLog(@"super rightMouseDown");
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    NSLog(@"super rightMouseUp");
+}
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+
+    // Update the view, if already loaded.
+}
+
+
+@end
+//
+//  ViewController.h
+//  dataFromControllerToView
+//
+//  Created by Guoliang Li on 2019/8/13.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+#import "myButton.h"
+@interface ViewController : NSViewController
+@property (weak) IBOutlet myButton *btn;
+
+
+@end
+

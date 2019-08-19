@@ -1,0 +1,125 @@
+//
+//  ViewController.m
+//  buttonEx
+//
+//  Created by Guoliang Li on 2019/8/5.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@implementation ViewController
+- (IBAction)muoni:(id)sender {
+    NSLog(@"mouni press");
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    
+
+  //  [self presentViewControllerAsSheet:nc];
+//    
+//    NSArray *arr = [[NSArray alloc] initWithObjects:@"arr1", @"arr2", nil];
+//    [mySettingData setObject:arr forKey:@"arrItem"];
+//    [mySettingData setObject:@"admin" forKey:@"user_name"];
+//    
+    NSLog(@"arrItem=%@", [mySettingData objectForKey:@"arrItem"]);
+    
+    NSLog(@"user_name=%@", [mySettingData objectForKey:@"user_name"]);
+    self.leftAndRight.delegate = self;
+    [self.gridButton setImage:[NSImage imageNamed:@"befor.png"]];
+    // Do any additional setup after loading the view.
+}
+
+
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+
+    // Update the view, if already loaded.
+}
+-(void)lAndRallPressed
+{
+    //按下的时候需要更新成按下的图片或者highlight
+    NSLog(@"左右键同时点了");
+  //  [self.gridButton setImage:[NSImage imageNamed:@"after.png"]];
+  //  [self.gridButton performClick:self.gridButton];
+    [self.gridButton highlight:true];
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    //按钮弹起的时候更新弹起的图片或者highlight
+    //总体上，不能影响其他功能，争取只提供动画，其他都不影响
+//    if(self.gridButton.image == [NSImage imageNamed:@"after.png"]){
+//        [self.gridButton setImage:[NSImage imageNamed:@"befor.png"]];
+//    }
+    [self.gridButton highlight:false];
+}
+-(void)mouseDown:(NSEvent *)event
+{
+    NSViewController* nc = [[NSViewController alloc] initWithNibName:@"customerViewcontroller" bundle:nil];
+    NSLog(@"nc.nibName == %@", nc.nibName);
+    [self presentViewControllerAsModalWindow:nc];
+}
+
+@end
+//
+//  mybutton.m
+//  buttonEx
+//
+//  Created by Guoliang Li on 2019/8/5.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "mybutton.h"
+
+@implementation mybutton
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
+    
+    // Drawing code here.
+}
+-(void)mouseDown:(NSEvent *)event
+{
+    NSLog(@"mouseDwon press");
+   // self.leftbuttonTime = event.timestamp;
+  //  NSLog(@"time==%f",event.timestamp);
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:event.timestamp];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss:SSS";
+    self.leftbuttonTime = [formatter stringFromDate:date];
+    if ([self pleaseInsertStarTime:self.rightbuttonTime andInsertEndTime:self.leftbuttonTime] < 0.2) {
+        self.allPressFlag = true;
+        [self.delegate lAndRallPressed];
+    }
+    NSLog(@"left%@",self.leftbuttonTime);
+}
+-(void)rightMouseDown:(NSEvent *)event
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:event.timestamp];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss:SSS";
+    self.rightbuttonTime = [formatter stringFromDate:date];
+    NSLog(@"rightbuttonTime%@",self.rightbuttonTime);
+    NSLog(@"leftbuttonTime%@",self.leftbuttonTime);
+    if ([self pleaseInsertStarTime:self.leftbuttonTime andInsertEndTime:self.rightbuttonTime] < 0.2) {
+        self.allPressFlag = true;
+        [self.delegate lAndRallPressed];
+    }
+    //NSLog(event);
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    [super rightMouseUp:event];
+}
+- (NSTimeInterval)pleaseInsertStarTime:(NSString *)starTime andInsertEndTime:(NSString *)endTime{
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];//根据自己的需求定义格式
+    NSDate* startDate = [formater dateFromString:starTime];
+    NSDate* endDate = [formater dateFromString:endTime];
+    NSTimeInterval time = [endDate timeIntervalSinceDate:startDate];
+    NSLog(@"time ==%f",time);
+    return time;
+}
+@end

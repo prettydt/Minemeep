@@ -1,0 +1,120 @@
+//
+//  ViewController.m
+//  buttonEx
+//
+//  Created by Guoliang Li on 2019/8/5.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.leftAndRight.delegate = self;
+    [self.gridButton setImage:[NSImage imageNamed:@"befor.png"]];
+    // Do any additional setup after loading the view.
+}
+
+
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+
+    // Update the view, if already loaded.
+}
+-(void)lAndRallPressed
+{
+    NSLog(@"左右键同时点了");
+    [self.gridButton setImage:[NSImage imageNamed:@"after.png"]];
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    if(self.gridButton.image == [NSImage imageNamed:@"after.png"]){
+        [self.gridButton setImage:[NSImage imageNamed:@"befor.png"]];
+    }
+    
+}
+@end
+
+
+//
+//  mybutton.h
+//  buttonEx
+//
+//  Created by Guoliang Li on 2019/8/5.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+NS_ASSUME_NONNULL_BEGIN
+@protocol leftButtonAndRightButtonAllPressed
+- (void)lAndRallPressed;
+@end
+@interface mybutton : NSButton
+
+@property (nonatomic, retain) id <leftButtonAndRightButtonAllPressed> delegate;
+
+@property NSString* leftbuttonTime;
+@property NSString* rightbuttonTime;
+@property BOOL* allPressFlag;
+@end
+
+NS_ASSUME_NONNULL_END
+
+
+//
+//  mybutton.m
+//  buttonEx
+//
+//  Created by Guoliang Li on 2019/8/5.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+#import "mybutton.h"
+
+@implementation mybutton
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
+    
+    // Drawing code here.
+}
+-(void)mouseDown:(NSEvent *)event
+{
+   // self.leftbuttonTime = event.timestamp;
+  //  NSLog(@"time==%f",event.timestamp);
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:event.timestamp];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss:SSS";
+    self.leftbuttonTime = [formatter stringFromDate:date];
+    NSLog(@"left%@",self.leftbuttonTime);
+}
+-(void)rightMouseDown:(NSEvent *)event
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:event.timestamp];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss:SSS";
+    self.rightbuttonTime = [formatter stringFromDate:date];
+    NSLog(@"right%@",self.rightbuttonTime);
+    if ([self pleaseInsertStarTime:self.leftbuttonTime andInsertEndTime:self.rightbuttonTime] < 0.08) {
+        self.allPressFlag = true;
+        [self.delegate lAndRallPressed];
+    }
+    //NSLog(event);
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    [super rightMouseUp:event];
+}
+- (NSTimeInterval)pleaseInsertStarTime:(NSString *)starTime andInsertEndTime:(NSString *)endTime{
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];//根据自己的需求定义格式
+    NSDate* startDate = [formater dateFromString:starTime];
+    NSDate* endDate = [formater dateFromString:endTime];
+    NSTimeInterval time = [endDate timeIntervalSinceDate:startDate];
+    NSLog(@"time ==%f",time);
+    return time;
+}
+@end

@@ -8,7 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <GameKit/GameKit.h>
-@interface ViewController : NSViewController<GKGameCenterControllerDelegate>
+#import "GCHelper.h"
+#import "boardView.h"
+#import "gridButton.h"
+@interface ViewController : NSViewController<GKGameCenterControllerDelegate,leftButtonAndRightButtonAllPressed>
 @property (retain) IBOutlet NSTextField *SecondTime;
 @property (retain) IBOutlet NSTextField *NumberLei;
 
@@ -21,6 +24,13 @@
 @property int passSecond;
 @property int leftGrid;
 @property NSTimer* timer;
+@property BOOL leftMouseDown;
+@property BOOL rightMouseDown;
+@property BOOL leftAndRightAllPressedFlag;
+@property NSMutableArray *buttonArray;
+@property BOOL isRoundFail;
+@property (weak) IBOutlet boardView *boardView;
+@property NSMutableArray* aroundGrid;
 -(void)showLadder;
 @end
 

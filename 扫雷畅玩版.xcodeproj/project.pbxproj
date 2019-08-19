@@ -29,12 +29,18 @@
 		C03F09EF225A34D2008F40DA /* tile_b.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09E5225A34D2008F40DA /* tile_b.png */; };
 		C03F09F1225A3508008F40DA /* tile_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F0225A3508008F40DA /* tile_mask.png */; };
 		C03F09F3225A35B0008F40DA /* tile_base.png in Resources */ = {isa = PBXBuildFile; fileRef = C03F09F2225A35B0008F40DA /* tile_base.png */; };
+		C04ACD0C22F718CE004C9506 /* tile_b.png in Resources */ = {isa = PBXBuildFile; fileRef = C04ACD0B22F718CE004C9506 /* tile_b.png */; };
+		C0625C7D22F6824500E2419B /* boardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0625C7C22F6824500E2419B /* boardView.m */; };
+		C0625C7F22F68E4800E2419B /* tile_b2.png in Resources */ = {isa = PBXBuildFile; fileRef = C0625C7E22F68E4700E2419B /* tile_b2.png */; };
+		C0625C8122F68EB800E2419B /* tile_b.png in Resources */ = {isa = PBXBuildFile; fileRef = C0625C8022F68EB800E2419B /* tile_b.png */; };
+		C0625C8722F7125200E2419B /* gridButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C0625C8622F7125200E2419B /* gridButton.m */; };
 		C0A5F2DF228FAC3400452144 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A5F2DE228FAC3400452144 /* GameKit.framework */; };
 		C0A5F2E322913A7B00452144 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2E222913A7A00452144 /* red.png */; };
 		C0A5F2E92291476B00452144 /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2E82291476B00452144 /* topbg.png */; };
 		C0A5F2EF2291648600452144 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2EE2291648600452144 /* white.png */; };
 		C0A5F2F122916D7C00452144 /* smiley1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2F022916D7C00452144 /* smiley1.png */; };
 		C0A5F2F322916DAE00452144 /* smile1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A5F2F222916DAE00452144 /* smile1.png */; };
+		C0B1F56B229C22B10025EF47 /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1F56A229C22B10025EF47 /* GCHelper.m */; };
 		C0EC9711224E47A900956E03 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9710224E47A900956E03 /* AppDelegate.m */; };
 		C0EC9714224E47A900956E03 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EC9713224E47A900956E03 /* ViewController.m */; };
 		C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0EC9715224E47A900956E03 /* Assets.xcassets */; };
@@ -87,13 +93,22 @@
 		C03F09E5225A34D2008F40DA /* tile_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_b.png; sourceTree = "<group>"; };
 		C03F09F0225A3508008F40DA /* tile_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_mask.png; sourceTree = "<group>"; };
 		C03F09F2225A35B0008F40DA /* tile_base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_base.png; sourceTree = "<group>"; };
+		C04ACD0B22F718CE004C9506 /* tile_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_b.png; sourceTree = "<group>"; };
 		C05372F022617B630009BCE4 /* 扫雷畅玩版.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "扫雷畅玩版.entitlements"; sourceTree = "<group>"; };
+		C0625C7B22F6824500E2419B /* boardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = boardView.h; sourceTree = "<group>"; };
+		C0625C7C22F6824500E2419B /* boardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = boardView.m; sourceTree = "<group>"; };
+		C0625C7E22F68E4700E2419B /* tile_b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_b2.png; sourceTree = "<group>"; };
+		C0625C8022F68EB800E2419B /* tile_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile_b.png; path = "../../../../../Applications/Minesweeper Deluxe.app/Contents/Resources/tile_b.png"; sourceTree = "<group>"; };
+		C0625C8522F7125200E2419B /* gridButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gridButton.h; sourceTree = "<group>"; };
+		C0625C8622F7125200E2419B /* gridButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gridButton.m; sourceTree = "<group>"; };
 		C0A5F2DE228FAC3400452144 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C0A5F2E222913A7A00452144 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		C0A5F2E82291476B00452144 /* topbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbg.png; sourceTree = "<group>"; };
 		C0A5F2EE2291648600452144 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		C0A5F2F022916D7C00452144 /* smiley1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smiley1.png; sourceTree = "<group>"; };
 		C0A5F2F222916DAE00452144 /* smile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile1.png; sourceTree = "<group>"; };
+		C0B1F569229C22B10025EF47 /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
+		C0B1F56A229C22B10025EF47 /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
 		C0EC970C224E47A900956E03 /* 扫雷畅玩版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "扫雷畅玩版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC970F224E47A900956E03 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C0EC9710224E47A900956E03 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -166,6 +181,11 @@
 		C0EC970E224E47A900956E03 /* 扫雷畅玩版 */ = {
 			isa = PBXGroup;
 			children = (
+				C04ACD0B22F718CE004C9506 /* tile_b.png */,
+				C0625C8522F7125200E2419B /* gridButton.h */,
+				C0625C8622F7125200E2419B /* gridButton.m */,
+				C0B1F569229C22B10025EF47 /* GCHelper.h */,
+				C0B1F56A229C22B10025EF47 /* GCHelper.m */,
 				C05372F022617B630009BCE4 /* 扫雷畅玩版.entitlements */,
 				C03F09DD225A34D2008F40DA /* start.wav */,
 				C03F09E0225A34D2008F40DA /* tile_1.png */,
@@ -192,6 +212,8 @@
 				6103B2D9225C75B600B90213 /* number_9.png */,
 				C0A5F2EE2291648600452144 /* white.png */,
 				C0A5F2E82291476B00452144 /* topbg.png */,
+				C0625C8022F68EB800E2419B /* tile_b.png */,
+				C0625C7E22F68E4700E2419B /* tile_b2.png */,
 				C0A5F2E222913A7A00452144 /* red.png */,
 				C0A5F2F222916DAE00452144 /* smile1.png */,
 				C0A5F2F022916D7C00452144 /* smiley1.png */,
@@ -202,6 +224,8 @@
 				C0EC9710224E47A900956E03 /* AppDelegate.m */,
 				C0EC9712224E47A900956E03 /* ViewController.h */,
 				C0EC9713224E47A900956E03 /* ViewController.m */,
+				C0625C7B22F6824500E2419B /* boardView.h */,
+				C0625C7C22F6824500E2419B /* boardView.m */,
 				C0EC9715224E47A900956E03 /* Assets.xcassets */,
 				C0EC9717224E47A900956E03 /* Main.storyboard */,
 				C0EC971A224E47A900956E03 /* Info.plist */,
@@ -357,8 +381,10 @@
 				6103B2E6225C75B700B90213 /* number_5.png in Resources */,
 				C0EC9716224E47A900956E03 /* Assets.xcassets in Resources */,
 				C03F09E7225A34D2008F40DA /* start.wav in Resources */,
+				C0625C8122F68EB800E2419B /* tile_b.png in Resources */,
 				C0EC974A224E64F400956E03 /* after.png in Resources */,
 				C0A5F2E92291476B00452144 /* topbg.png in Resources */,
+				C04ACD0C22F718CE004C9506 /* tile_b.png in Resources */,
 				C03F09F1225A3508008F40DA /* tile_mask.png in Resources */,
 				C0A5F2F322916DAE00452144 /* smile1.png in Resources */,
 				6103B2E2225C75B700B90213 /* number_8.png in Resources */,
@@ -385,6 +411,7 @@
 				C0A5F2E322913A7B00452144 /* red.png in Resources */,
 				C03F09EE225A34D2008F40DA /* tile_6.png in Resources */,
 				6103B2E4225C75B700B90213 /* number_1.png in Resources */,
+				C0625C7F22F68E4800E2419B /* tile_b2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,9 +437,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0EC9714224E47A900956E03 /* ViewController.m in Sources */,
+				C0625C8722F7125200E2419B /* gridButton.m in Sources */,
 				C0EC971C224E47A900956E03 /* main.m in Sources */,
 				C0EC9711224E47A900956E03 /* AppDelegate.m in Sources */,
 				C0EC974E224E6A2000956E03 /* Grid.m in Sources */,
+				C0B1F56B229C22B10025EF47 /* GCHelper.m in Sources */,
+				C0625C7D22F6824500E2419B /* boardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

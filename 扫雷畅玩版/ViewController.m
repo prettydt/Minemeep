@@ -20,10 +20,12 @@ NSString *_leaderboardIdentifier = @"543109";
 }
 -(void)viewDidAppear{
     
-    [self.view.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*5) display:true animate:true];
+    [self.boardView.window setFrame:NSMakeRect(300,300, self.rowNumber*31, self.colNumber*31+self.colNumber*5) display:true animate:true];
     //gameCenter本地授权
     [self authenticateLocalPlayer];
     [self showTopBg];
+//    GCHelper *gc = [GCHelper new];
+//    [gc findMatchWithMinPlayers:2 maxPlayers:2 viewController:self];
     // 设置图片拉伸形式
 
     
@@ -40,11 +42,12 @@ NSString *_leaderboardIdentifier = @"543109";
     NSString *whiteString = @"white.png";
     NSImage *whiteImage = [NSImage imageNamed:whiteString];
     [white setImage:whiteImage];
-    [self.view addSubview:white];
+    [self.boardView addSubview:white];
     [self numberToLabel:self.leiNumber secOrLei:@"lei"];
     [self numberToLabel:00 secOrLei:@"sec"];
     //生成新游戏按钮: newGame
-    NSButton *button = [[NSButton alloc]init];
+    gridButton *button = [[gridButton alloc]init];
+    
     button.frame=CGRectMake(420, 505, 31, 31);
    // button.title = @"☺";
     [button setTarget:self];
@@ -52,7 +55,7 @@ NSString *_leaderboardIdentifier = @"543109";
     
     [button setAction:@selector(viewDidLoad)];
     
-    [self.view addSubview:button];
+    [self.boardView addSubview:button];
     
     
 }
@@ -109,7 +112,7 @@ NSString *_leaderboardIdentifier = @"543109";
 	
 	NSString *valuePassSecond = [self addString:@"0" Length:3 OnString:passSecond];
 	
-	NSLog(@"passSecond == %@",valuePassSecond);
+	//NSLog(@"passSecond == %@",valuePassSecond);
 
 	for(int i = 0 ;i< 3; i++)
 	{
@@ -117,15 +120,51 @@ NSString *_leaderboardIdentifier = @"543109";
 		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valuePassSecond substringWithRange:NSMakeRange(i, 1)] ];
         NSImage *myImage2 = [NSImage imageNamed:named];
 		[imView2 setImage:myImage2];
-		[self.view addSubview:imView2];
+		[self.boardView addSubview:imView2];
 	}
+}
+
+
+-(void)mouseMoved:(NSEvent *)event
+{
+//    CGDisplayHideCursor (kCGNullDirectDisplay);
+//    CGAssociateMouseAndMouseCursorPosition (false);
+// //   CGDisplayMoveCursorToPoint (kCGDirectMainDisplay, CGPointZero);
+//    /* perform your application’s main loop */
+//    CGAssociateMouseAndMouseCursorPosition (true);
+//    CGDisplayShowCursor (kCGNullDirectDisplay);
+//
+//    for (NSArray* arr in self.muArr)
+//    {
+//        for (Grid* grid in arr){
+//            if(NSPointInRect(event.locationInWindow, grid.btn.frame))
+//            {
+//               // self.isRoundFail = true;
+//                [grid.btn setImage:[NSImage imageNamed:@"after.png"]];
+////                if (grid.btn.image == [NSImage imageNamed:@"after.png"]) {
+////                    [grid.btn setImage:[NSImage imageNamed:@"tile_mask"]];
+////                }else
+////                {
+////                    [grid.btn setImage:[NSImage imageNamed:@"after.png"]];
+////                }
+//             //  [grid.btn setImage:[NSImage imageNamed:@"after.png"]];
+//                NSLog(grid.btn.title);
+//            }
+//        }
+//    }
+
+//    [super mouseMoved: event];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"size == %@",NSStringFromSize(self.view.bounds.size));
+    NSLog(@"size == %@",NSStringFromSize(self.boardView.bounds.size));
+
+
 	[self numberToLabel:00 secOrLei:@"sec"];
     //[self numberToLabel:99 secOrLei:@"lei"];
-    
+    //初始化失败标志，初始情况为false
+    self.isRoundFail = false;
     NSMenu *mainMenu = [NSApp mainMenu];
     NSLog(@"%@ - %@",mainMenu,[mainMenu itemArray]);
     NSMenuItem *oneItem = [[NSMenuItem alloc] init];
@@ -145,11 +184,16 @@ NSString *_leaderboardIdentifier = @"543109";
 -(void)startGame:(int)rowNumber colNumber:(int)colNumber leiNumber:(int)leiNumber
 {
     [self.timer invalidate];
-    [self numberToLabel:00 secOrLei:@"sec"];
-    //显示秒
-    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 
+    //显示秒
+    //修改此部分的bug，原因1是由于如果运行扫雷，但是始终没有操作，计时器会一直计时，最后导致内存溢出，修改为用户点击第一个白块为
+    //计时器开始时间2019年08月04日10:04:09
+//    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+//
+//    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+
+    
+    [self numberToLabel:00 secOrLei:@"sec"];
 	//[self initPassSecond];
     self.SecondTime.integerValue = 0;
     self.passSecond = 0;
@@ -168,18 +212,24 @@ NSString *_leaderboardIdentifier = @"543109";
         NSMutableArray *arr = [NSMutableArray new];
         for (int y = 0 ; y < self.colNumber; y++) {
             //生成按钮
-            NSButton *button = [[NSButton alloc]init];
+            gridButton *button = [[gridButton alloc]init];
+            button.delegate = self;
             button.frame=CGRectMake(0+31*x, 0+31*y, 31, 31);
             button.title = @"";
-            [button setToolTip:[NSString stringWithFormat:@"%d_%d",x,y]];
+          //  [button setToolTip:[NSString stringWithFormat:@"%d_%d",x,y]];
             [button setTarget:self];
             [button setImage:[NSImage imageNamed:@"tile_mask.png"]];
             
             [button setAction:@selector(buttonClick:)];
-            [self.view addSubview:button];
+            [self.boardView addSubview:button];
+            
+            //把button加到新的数组，用于enable的控制，在grid里面控制button.enable不行
+            [self.buttonArray addObject:button];
             //把生成的按钮加到grid的属性里面
             Grid *grid1 = [Grid new];
             grid1.btn = button;
+            grid1.row = x;
+            grid1.column = y;
             [arr addObject:grid1];
         }
         [self.muArr addObject:arr];
@@ -207,137 +257,238 @@ NSString *_leaderboardIdentifier = @"543109";
 //    self.SecondTime.bezeled = NO;
 //    self.SecondTime.backgroundColor = [NSColor grayColor];
 //    self.SecondTime.textColor = [NSColor redColor];
-//    [self.view addSubview:self.SecondTime];
+//    [self.boardView addSubview:self.SecondTime];
 //    self.NumberLei.frame = NSMakeRect(120, self.colNumber*32, 60, 20);
 //    self.NumberLei.bezeled = NO;
 //    self.NumberLei.backgroundColor = [NSColor grayColor];
-//    [self.view addSubview:self.NumberLei];
+//    [self.boardView addSubview:self.NumberLei];
+}
+-(void)mouseDown:(NSEvent *)event
+{
+
+    NSLog(@"mouse down");
 }
 - (void)rightMouseDown:(NSEvent *)event
 {
-
-    [self succSituation];
-    for (NSArray* arr in self.muArr)
-    {
-        for (Grid* grid in arr){
-            if(NSPointInRect(event.locationInWindow, grid.btn.frame))
-            {
-                NSLog(@"grid.btn.title %@",grid.btn.title);
-                if (!grid.IsClicked) {
-                    if([grid.btn.title  isEqual: @"🚩"])
-                    {
-                        NSLog(@"1");
-                        grid.btn.title = @"❓";
-
-                    }else
-                        if([grid.btn.title  isEqual: @"❓"])
+//    if (self.leftMouseDown) {
+//        self.leftMouseDown = NO;
+//        self.rightMouseDown = YES;
+//        NSLog(@"all press");
+//    }else{
+   // if (!self.leftAndRightAllPressedFlag) {
+      
+    
+        [self succSituation];
+        for (NSArray* arr in self.muArr)
+        {
+            for (Grid* grid in arr){
+                if(NSPointInRect(event.locationInWindow, grid.btn.frame))
+                {
+                    NSLog(@"grid.btn.title %@",grid.btn.title);
+                    if (!grid.IsClicked) {
+                        if([grid.btn.title  isEqual: @"🚩"])
                         {
-                            NSLog(@"2");
-                            grid.btn.title = @"";
-                            
+                            NSLog(@"1");
+                            grid.btn.title = @"❓";
+
                         }else
-                        if([grid.btn.title  isEqual: @""])
+                            if([grid.btn.title  isEqual: @"❓"])
+                            {
+                                NSLog(@"2");
+                                grid.btn.title = @"";
+                                
+                            }else
+                            if([grid.btn.title  isEqual: @""])
+                            {
+                                NSLog(@"3");
+                                grid.btn.title = @"🚩";
+                               // self.leiNumber --;
+                            }
+                        NSLog(@"mouse is clicked %@",grid);
+                        //如果 grid.btn.title ==🚩，self.leiNumber --
+                        //else self.leiNumber ++
+                        if([grid.btn.title isEqualToString:@"🚩"])
                         {
-                            NSLog(@"3");
-                            grid.btn.title = @"🚩";
-                           // self.leiNumber --;
+                            self.leiNumber --;
                         }
+                        if([grid.btn.title isEqualToString:@"❓"])
+                        {
+                            self.leiNumber ++;
+                        }
+                    }
+                    else//右键扫除周边8个格子
+                    {
+                        
+                        NSArray *arrays = @[@[@-1,@-1],@[@-1,@0],@[@-1,@+1],@[@0,@-1],@[@0,@1],@[@1,@0],@[@1,@1],@[@1,@-1]];
+                        int row = grid.row;
+                        int col = grid.column;
+                        int arroundCount = 0;
+                        for (NSArray *array1 in arrays)
+                        {
+
+                            int x1 = row + [array1[0] intValue];
+                            int y1 = col + [array1[1] intValue];
+                            if(x1 >= 0 && x1< self.rowNumber && y1 >= 0 && y1 < self.colNumber )
+                            {
+                                Grid *grid8 = [Grid new];
+                                grid8 = self.muArr[x1][y1];
+                                //如果8颗里面有雷，则不点开
+                                if ([grid.btn.title isEqualToString:@"🚩"]) {
+                                    arroundCount ++;
+                                }
+                            }
+                        }
+//
+                        int gridCount = [[grid.btn.image.name substringFromIndex:5] intValue];
+                        for (NSArray *array1 in arrays)
+                        {
+
+                            int x1 = row + [array1[0] intValue];
+                            int y1 = col + [array1[1] intValue];
+                            if(x1 >= 0 && x1< self.rowNumber && y1 >= 0 && y1 < self.colNumber )
+                            {
+                                Grid *grid8 = [Grid new];
+                                grid8 = self.muArr[x1][y1];
+                                //如果8颗里面还有雷没有被点开，则不点开
+                                //如果8颗粒面的雷数字==旗子的数字，则点开
+//                                if (grid8.IsLei && !grid8.IsClicked) {
+//                                    break;
+//                                }
+                               // if (arroundCount == gridCount) {
+                                     [self buttonClick:grid8.btn];
+                             //   }
+                                
+                            }
+                        }
+                      //  NSLog(@"A````");
+                    //    NSLog(@"%d",arroundCount);
+                    //    NSLog(@"%d", gridCount);
+                    }
+
+                    
                 }
-                    NSLog(@"mouse is clicked %@",grid);
-                //如果 grid.btn.title ==🚩，self.leiNumber --
-                //else self.leiNumber ++
-                if([grid.btn.title isEqualToString:@"🚩"])
-                {
-                    self.leiNumber --;
-                }
-                if([grid.btn.title isEqualToString:@"❓"])
-                {
-                    self.leiNumber ++;
-                }
+
                 
             }
-
-               
         }
-    }
-    self.NumberLei.integerValue = self.leiNumber;
-	[self numberToLabel:self.leiNumber secOrLei:@"lei"];
+        self.NumberLei.integerValue = self.leiNumber;
+        [self numberToLabel:self.leiNumber secOrLei:@"lei"];
+ //  }
 }
+
 - (IBAction)buttonClick:(id)sender {
-    NSLog(@"clicked");
-
-    NSButton *btn = (NSButton *)sender;
-    
-
-
-    int row = [[btn.toolTip componentsSeparatedByString:@"_"][0] integerValue];
-    int col = [[btn.toolTip componentsSeparatedByString:@"_"][1] integerValue];
-
-    
-    Grid *clickGrid = self.muArr[row][col];
-    NSLog(@"toolTip%@",clickGrid.btn.title);
-    if((!clickGrid.IsClicked) && ([clickGrid.btn.title isEqualToString: @""]))
-    {
-
-        btn.enabled = false;
-        clickGrid.IsClicked = true;
-        clickGrid = self.muArr[row][col];
-        if (clickGrid.IsLei) {
-            [self showAlert];
-             btn.title = @"💥";
+        //如果本局失败了，则只不能继续按钮
+        if (self.isRoundFail) {
             return;
         }
-        NSArray *arrays = @[@[@-1,@-1],@[@-1,@0],@[@-1,@+1],@[@0,@-1],@[@0,@1],@[@1,@0],@[@1,@1],@[@1,@-1]];
-        int count = 0;
-        int x = 0;
-        int y = 0;
-        for (NSArray *array in arrays) {
-            NSLog(@"%@",array);
-            x = row + [array[0] intValue];
-            y = col + [array[1] intValue];
-            if(x >= 0 && x< self.rowNumber && y >= 0 && y < self.colNumber )
-            {
-                Grid *grid = self.muArr[x][y];
-                NSLog(@"grid == %@",grid);
-                if(grid.IsLei)
-                {
-                    count ++;
-                    
-                }
-            }
-        }
-        if(count == 0)
-        {
-            
-            for (NSArray *array1 in arrays)
-            {
-                NSLog(@"A");
-                int x1 = row + [array1[0] intValue];
-                int y1 = col + [array1[1] intValue];
-                if(x1 >= 0 && x1< self.rowNumber && y1 >= 0 && y1 < self.colNumber )
-                {
-                    Grid *grid8 = [Grid new];
-                    grid8 = self.muArr[x1][y1];
-                    
-                    [self buttonClick:grid8.btn];
-                }
-            }
-        }
-        if(count == 0)
-        {
-           
-            [btn setImage:[NSImage imageNamed:@"tile_base.png"]];
-        }else
-        {
-            NSString *title = [NSString stringWithFormat:@"%d",count];
-            NSColor *color = [NSColor redColor];
-           // [self setButtonTitleFor:btn toString:title withColor:color];
-            [btn setImage:[NSImage imageNamed:[NSString stringWithFormat:@"tile_%d.png",count]]];
-        }
 
-        //   btn.title = [NSString stringWithFormat:@"%d",count];
-    }
+        //2019年08月04日10:10:15
+        if (!self.timer.isValid) {
+            self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+            
+            [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+        }
     
+
+        gridButton *btn = (gridButton *)sender;
+        
+
+        Grid *clickGrid = [Grid new];
+        for (NSArray* arr in self.muArr)
+        {
+            for (Grid* grid in arr){
+                if (grid.btn == btn) {
+                    clickGrid = grid;
+                }
+            }
+        }
+        int row = clickGrid.row;
+        int col = clickGrid.column;
+
+        NSLog(@"toolTip%@",clickGrid.btn.title);
+        if((!clickGrid.IsClicked) && ([clickGrid.btn.title isEqualToString: @""]))
+        {
+
+            btn.enabled = false;
+            clickGrid.IsClicked = true;
+            clickGrid = self.muArr[row][col];
+            if (clickGrid.IsLei) {
+               // [self showAlert];
+                [self.timer invalidate];
+                for (NSArray* arr in self.muArr)
+                {
+                    for (Grid* grid in arr){
+                        if (grid.IsLei) {
+                            self.isRoundFail = true;
+                       //    grid.btn.title = @"💥";
+                            if (grid.btn == clickGrid.btn) {
+                                
+                                [grid.btn setImage:[NSImage imageNamed:@"tile_b.png"]];
+                            }else{
+                            [grid.btn setImage:[NSImage imageNamed:@"tile_b2.png"]];
+
+                            }
+                        }
+
+                    }
+                }
+                for (gridButton* btn in self.buttonArray) {
+                    btn.enabled = false;
+                }
+             //    btn.title = @"💥";
+                return;
+            }
+            NSArray *arrays = @[@[@-1,@-1],@[@-1,@0],@[@-1,@+1],@[@0,@-1],@[@0,@1],@[@1,@0],@[@1,@1],@[@1,@-1]];
+            int count = 0;
+            int x = 0;
+            int y = 0;
+            for (NSArray *array in arrays) {
+                NSLog(@"%@",array);
+                x = row + [array[0] intValue];
+                y = col + [array[1] intValue];
+                if(x >= 0 && x< self.rowNumber && y >= 0 && y < self.colNumber )
+                {
+                    Grid *grid = self.muArr[x][y];
+                    NSLog(@"grid == %@",grid);
+                    if(grid.IsLei)
+                    {
+                        count ++;
+                        
+                    }
+                }
+            }
+            if(count == 0)
+            {
+                
+                for (NSArray *array1 in arrays)
+                {
+                    NSLog(@"A");
+                    int x1 = row + [array1[0] intValue];
+                    int y1 = col + [array1[1] intValue];
+                    if(x1 >= 0 && x1< self.rowNumber && y1 >= 0 && y1 < self.colNumber )
+                    {
+                        Grid *grid8 = [Grid new];
+                        grid8 = self.muArr[x1][y1];
+                        
+                        [self buttonClick:grid8.btn];
+                    }
+                }
+            }
+            if(count == 0)
+            {
+               
+                [btn setImage:[NSImage imageNamed:@"tile_base.png"]];
+            }else
+            {
+                NSString *title = [NSString stringWithFormat:@"%d",count];
+                NSColor *color = [NSColor redColor];
+               // [self setButtonTitleFor:btn toString:title withColor:color];
+                [btn setImage:[NSImage imageNamed:[NSString stringWithFormat:@"tile_%d.png",count]]];
+            }
+
+            //   btn.title = [NSString stringWithFormat:@"%d",count];
+        }
+   // }
  //判断胜利,开始是进入循环累加了，最后想明白，初始化成0解决问题
     [self succSituation];
 }
@@ -361,7 +512,7 @@ NSString *_leaderboardIdentifier = @"543109";
         [self showSuccAlert];
     }
 }
-- (void)setButtonTitleFor:(NSButton*)button toString:(NSString*)title withColor:(NSColor*)color
+- (void)setButtonTitleFor:(gridButton*)button toString:(NSString*)title withColor:(NSColor*)color
 {
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     [style setAlignment:NSCenterTextAlignment];
@@ -374,8 +525,8 @@ NSString *_leaderboardIdentifier = @"543109";
     
 
 }
-
--(void)recursion:(int) row and:(int) col btn:(NSButton *)btn{
+//递归扫雷
+-(void)recursion:(int) row and:(int) col btn:(gridButton *)btn{
     Grid *clickGrid = self.muArr[row][col];
     if(!clickGrid.IsClicked)
     {
@@ -463,7 +614,7 @@ NSString *_leaderboardIdentifier = @"543109";
     alert.alertStyle = NSAlertStyleInformational;
     [alert addButtonWithTitle:@"再玩一局"];
     [alert setInformativeText:@"有位科学家到了南极，碰到一群企鹅。他问其中一个：“你每天都干什么呀？”那企鹅说：“吃饭睡觉打豆豆。”\r他又问另一个：“你每天都干什么呀？”那企鹅也说：“吃饭睡觉打豆豆。”\r 他问了许多许多的企鹅，都说：“吃饭睡觉打豆豆。”\r后来他碰到了一只小企鹅，很可爱的样子，就问它：“小朋友，你每天都干什么呀？”小企鹅说：“吃饭睡觉。”科学家一愣，随即问到：“你怎么不打豆豆？”\r小企鹅说：“因为我就是豆豆。”"];
-    [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
+    [alert beginSheetModalForWindow:[self.boardView window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK){
             NSLog(@"(returnCode == NSOKButton)");
         }else if (returnCode == NSModalResponseCancel){
@@ -489,7 +640,7 @@ NSString *_leaderboardIdentifier = @"543109";
     alert.alertStyle = NSAlertStyleInformational;
     [alert addButtonWithTitle:@"再玩一局"];
 
-    [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
+    [alert beginSheetModalForWindow:[self.boardView window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK){
             NSLog(@"(returnCode == NSOKButton)");
         }else if (returnCode == NSModalResponseCancel){
@@ -521,7 +672,7 @@ NSString *_leaderboardIdentifier = @"543109";
 		NSString *named = [NSString  stringWithFormat:@"number_%@.png",[valueInt substringWithRange:NSMakeRange(i, 1)] ];
 		NSImage *myImage2 = [NSImage imageNamed:named];
 		[imView2 setImage:myImage2];
-		[self.view addSubview:imView2];
+		[self.boardView addSubview:imView2];
 	}
 }
 
@@ -598,7 +749,72 @@ NSString *_leaderboardIdentifier = @"543109";
     [self presentViewControllerAsSheet:gcViewController];
 }
 
+-(void)lAndRallPressed:(gridButton*)btn
+{
+    
+    //如果同时按了，就是这个值是true，并不能执行以前的rightMouseDown
+    self.leftAndRightAllPressedFlag = true;
+    
+    //周边8个格子的数组
+    self.aroundGrid  = [NSMutableArray new];
+    //扫描二维数组，找出具体的btn是谁，取出btn对应的row和col
+    
+    int row = 0;
+    int col = 0;
+    for (NSArray* arr in self.muArr)
+    {
+        for (Grid* grid in arr){
+            if (grid.btn == btn) {
+                row = grid.row;
+                col = grid.column;
+            }
+        }
+    }
+    
+    NSArray *arraysAround = @[@[@-1,@-1],@[@-1,@0],@[@-1,@+1],@[@0,@-1],@[@0,@1],@[@1,@0],@[@1,@1],@[@1,@-1]];
+    int count = 0;
+    for (NSArray *array in arraysAround) {
+        NSLog(@"%@",array);
+        int x = row + [array[0] intValue];
+        int y = col + [array[1] intValue];
+        if(x >= 0 && x< self.rowNumber && y >= 0 && y < self.colNumber )
+        {
+            
+            Grid *grid = self.muArr[x][y];
+            gridButton *btn = grid.btn;
+            
+            [self.aroundGrid addObject:grid];
+            NSLog(@"btn.image.name==%@",btn.image.name);
+            if (!grid.IsClicked) {
+                btn.highlighted = true;
+            }
+            
+//            if(btn.image == [NSImage imageNamed:@"tile_mask.png"])
+//            {
+//              [btn setImage:[NSImage imageNamed:@"after.png"]];
+//            }
 
+            NSLog(@"grid == %@",grid);
+        }
+    }
+    NSLog(@"左右键同时点了");
+   // [self.gridButton setImage:[NSImage imageNamed:@"after.png"]];
+}
+-(void)rightMouseUp:(NSEvent *)event
+{
+    for (Grid *grid in self.aroundGrid) {
+        gridButton *btn = grid.btn;
+        if (!grid.IsClicked) {
+            btn.highlighted = false;
+        }
+        
+    }
+    //event.userData
+  //  if(self.gridButton.image == [NSImage imageNamed:@"after.png"]){
+     //   [self.gridButton setImage:[NSImage imageNamed:@"befor.png"]];
+   // }
+    
+}
 @end
 //实验button的字体是否能变成红色，失败了，暂时搁浅
 
@@ -614,4 +830,4 @@ NSString *_leaderboardIdentifier = @"543109";
 //[btn setAttributedTitle:title];
 //
 //////  btn setTitle:<#(NSString * _Nonnull)#>
-//[btn setImage:[NSImage imageNamed:@"after.png"]];
+

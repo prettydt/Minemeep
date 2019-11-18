@@ -1,0 +1,206 @@
+//
+//  main.swift
+//  forCardGameSwift
+//
+//  Created by Guoliang Li on 2019/11/18.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+import Foundation
+
+print("Hello, World!")
+
+var cards = [Card]()
+//for index in 0...6
+//{
+//    let  card =  Card()
+//    card.cardNumber = Int(arc4random() % 10)
+//    card.cardType = "#"
+//    cards.insert(card, at: index)
+//}
+let  card =  Card()
+card.cardType = "♦️"
+card.red_white = "red"
+card.cardNumber = 2
+cards .append(card)
+
+let  cardBefore =  Card()
+cardBefore.cardType = "♦️"
+cardBefore.red_white = "red"
+cardBefore.cardNumber = 2
+cards .append(cardBefore)
+var common = CommonFunction();
+var isFlag = common.isStraight(arr: cards as NSArray)
+var gameloop = GameLoop()
+var randomArr = gameloop.initGame().shuffled()
+var array2D = Array2D(columns: 9, rows: 7, initialValue: Card())
+for x in 0..<8
+{
+    for y in 0..<7
+    {
+        var count = 0
+        count = randomArr.count
+        var  index = arc4random() % count
+        array2D[x,y] = randomArr[Int(arc4random() % randomArr.count)]
+    }
+}
+print(randomArr)
+print(isFlag)
+//print(cards)
+
+
+Card
+
+
+import Cocoa
+
+class Card: NSObject {
+    var cardType = ""
+    var cardNumber = 0
+    var red_white = ""
+}
+
+Array2D
+//
+//  Array2D.swift
+//  forCardGameSwift
+//
+//  Created by Guoliang Li on 2019/11/18.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+import Cocoa
+public struct Array2D<T> {
+  public let columns: Int
+  public let rows: Int
+  fileprivate var array: [T]
+  
+  public init(columns: Int, rows: Int, initialValue: T) {
+    self.columns = columns
+    self.rows = rows
+    array = .init(repeating: initialValue, count: rows*columns)
+  }
+  
+  public subscript(column: Int, row: Int) -> T {
+    get {
+      precondition(column < columns, "Column \(column) Index is out of range. Array<T>(columns: \(columns), rows:\(rows))")
+      precondition(row < rows, "Row \(row) Index is out of range. Array<T>(columns: \(columns), rows:\(rows))")
+      return array[row*columns + column]
+    }
+    set {
+      precondition(column < columns, "Column \(column) Index is out of range. Array<T>(columns: \(columns), rows:\(rows))")
+      precondition(row < rows, "Row \(row) Index is out of range. Array<T>(columns: \(columns), rows:\(rows))")
+      array[row*columns + column] = newValue
+    }
+  }
+}
+
+
+//
+//  GameLoop.swift
+//  forCardGameSwift
+//
+//  Created by Guoliang Li on 2019/11/18.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+import Cocoa
+
+class GameLoop: NSObject {
+    var cards = [Card]()
+    func initGame() -> [Card] {
+        let cardType = ["♦️","♥️","♠️","♣️"]
+        let number = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+        for x in 0..<cardType.count {
+            for y in 0..<number.count
+            {
+                let card = Card();
+                card.cardType = cardType[x];
+                card.cardNumber = number[y];
+                cards.append(card)
+            }
+        }
+        return cards
+    }
+    //往左上挪
+    //如果有位置直接挪，总共4个位置
+    func moveToLeft(in:Array2D<Card>) -> Bool  {
+        
+        return false
+    }
+    //从左上往中间挪
+    func moveFromLeftToMiddle() -> Bool {
+        return false
+    }
+    //往右上挪
+    func moveToRight() -> Bool {
+        return false
+    }
+    //在中间之间挪
+    func moveInMiddle() -> Bool  {
+        return false
+    }
+}
+
+//
+//  CommonFunction.swift
+//  forCardGameSwift
+//
+//  Created by Guoliang Li on 2019/11/18.
+//  Copyright © 2019 Guoliang Li. All rights reserved.
+//
+
+import Cocoa
+
+class CommonFunction: NSObject {
+    func isFlush(arr:NSArray) -> (Bool){
+        var returnFlag = true;
+        //第一判断是否连续，第二判断是否黑白间隔~
+        for i in 0..<arr.count {
+            if(i>0){
+                var card = Card();
+                card = arr[i] as! Card;
+                var cardBefore = Card();
+                cardBefore = arr[i-1] as! Card
+                //判断数字是否连续,for example//1,2,3,4,5,
+                if ((card.cardNumber - cardBefore.cardNumber) != 1) {
+                    returnFlag = false;
+                    break;
+                }
+                //判断是否flush,for example//*1，*2，*3
+                if (!(card.cardType == cardBefore.cardType)) {
+                    returnFlag = false;
+                    break;
+                }
+            }
+        }
+        
+        return returnFlag;
+        
+    }
+    func isStraight(arr:NSArray) -> (Bool){
+           var returnFlag = true;
+           //第一判断是否连续，第二判断是否黑白间隔~
+           for i in 0..<arr.count {
+               if(i>0){
+                   var card = Card();
+                   card = arr[i] as! Card;
+                   var cardBefore = Card();
+                   cardBefore = arr[i-1] as! Card
+                   //判断数字是否连续,for example//1,2,3,4,5,
+                   if ((card.cardNumber - cardBefore.cardNumber) != -1) {
+                       returnFlag = false;
+                       break;
+                   }
+                   //判断是否flush,for example//*1，*2，*3
+                   if (!(card.red_white == cardBefore.red_white)) {
+                       returnFlag = false;
+                       break;
+                   }
+               }
+           }
+           
+           return returnFlag;
+           
+       }
+}
